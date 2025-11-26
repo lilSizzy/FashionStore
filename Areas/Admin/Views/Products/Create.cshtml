@@ -1,0 +1,105 @@
+﻿@model FashionStore.Models.Products
+
+@section Styles {
+    <link rel="stylesheet" href="~/Areas/Admin/Content/Products/Create.css" />
+}
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.PageTitle = "Thêm sản phẩm mới";
+}
+
+@section breadcrumb {
+    <li class="breadcrumb-item">
+        <a href="@Url.Action("Index")">Products</a>
+    </li>
+    <li class="breadcrumb-item active">Thêm mới</li>
+}
+
+<div class="card p-4 shadow-sm">
+    @using (Html.BeginForm("Create", "Products", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <!-- Ảnh chính -->
+        <div class="mb-4">
+            <label class="fw-semibold">Ảnh chính *</label>
+
+            <div id="dropZoneMain" class="dropzone" onclick="document.getElementById('MainImageFile').click()">
+                <p>Kéo thả ảnh chính hoặc bấm để chọn</p>
+            </div>
+
+            <input type="file" id="MainImageFile" name="MainImageFile"
+                   class="d-none"
+                   accept="image/*" required />
+
+            <small id="fileNameMain" class="text-success fw-bold"></small>
+            <img id="previewMain" />
+        </div>
+
+        <!-- Tên sản phẩm -->
+        <div class="mb-3">
+            <label class="fw-semibold">Tên sản phẩm *</label>
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", required = "required", placeholder = "Nhập tên sản phẩm" })
+        </div>
+
+        <!-- Giá -->
+        <div class="mb-3">
+            <label class="fw-semibold">Giá (VNĐ) *</label>
+            @Html.TextBoxFor(m => m.Price, new { @class = "form-control", type = "number", min = "0", step = "1000", required = "required" })
+        </div>
+
+        <!-- Danh mục -->
+        <div class="mb-3">
+            <label class="fw-semibold">Danh mục *</label>
+            @Html.DropDownListFor(m => m.CategoryId, (SelectList)ViewBag.CategoryId, "-- Chọn danh mục --", new { @class = "form-select", required = "required" })
+        </div>
+
+        <!-- Màu sắc -->
+        <div class="mb-3">
+            <label class="fw-semibold">Màu sắc</label>
+            @Html.TextBoxFor(m => m.Color, new { @class = "form-control", placeholder = "Ví dụ: Đỏ, Xanh, Đen..." })
+        </div>
+
+        <!-- Kích cỡ -->
+        <div class="mb-3">
+            <label class="fw-semibold">Kích cỡ</label>
+            @Html.TextBoxFor(m => m.Size, new { @class = "form-control", placeholder = "Ví dụ: S, M, L, XL..." })
+        </div>
+
+        <!-- Mô tả -->
+        <div class="mb-3">
+            <label class="fw-semibold">Mô tả sản phẩm</label>
+            @Html.TextAreaFor(m => m.Description, 5, 50, new { @class = "form-control", placeholder = "Nhập mô tả sản phẩm..." })
+        </div>
+
+        <!-- Ảnh phụ -->
+<div class="mb-4">
+    <label class="fw-semibold">Ảnh phụ (kéo thả 1 hoặc nhiều ảnh)</label>
+
+    <div id="dropZoneSub" class="dropzone" onclick="document.getElementById('ImageFiles').click()">
+        <p>Kéo thả ảnh phụ hoặc bấm để chọn</p>
+    </div>
+
+    <input type="file" id="ImageFiles" name="ImageFiles" multiple accept="image/*" class="d-none" />
+
+    <div id="subPreviewContainer" class="sub-preview"></div>
+    <!-- Tuỳ chọn: có thể thêm sẵn cho dễ style -->
+    <div id="subCount" class="sub-info-count"></div>
+    <ul id="subFileList" class="sub-file-list"></ul>
+</div>
+
+        <!-- Nút -->
+        <button class="btn btn-success">
+            <i class="fa fa-save"></i> Lưu sản phẩm
+        </button>
+        <a href="@Url.Action("Index")" class="btn btn-secondary">
+            <i class="fa fa-arrow-left"></i> Trở lại
+        </a>
+    }
+</div>
+
+@section Scripts {
+    <script src="~/Areas/Admin/Scripts/dragdrop-file.js"></script>
+    <script src="~/Areas/Admin/Scripts/dragdrop-multi.js"></script>
+}

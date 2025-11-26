@@ -1,0 +1,35 @@
+﻿<div class="modal fade" id="registerModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content shadow-lg">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold">Đăng ký tài khoản mới</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                <div id="registerError" class="alert alert-danger d-none"></div>
+                <div id="registerSuccess" class="alert alert-success d-none"></div>
+
+                @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { id = "registerForm", autocomplete = "off" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="mb-3">
+                        <label class="form-label">Tên đăng nhập</label>
+                        <input type="text" name="username" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Mật khẩu</label>
+                        <input type="password" name="password" class="form-control" required />
+                        <small class="text-muted">Bạn có thể dùng mật khẩu đơn giản như 123 để test.</small>
+                    </div>
+
+                    <button type="submit" class="btn btn-success w-100">
+                        <i class="fa fa-user-plus me-2"></i> Đăng ký
+                    </button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,137 @@
+﻿@model FashionStore.Models.CartModel
+
+@{
+    ViewBag.Title = "Giỏ Hàng";
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4"><i class="fas fa-shopping-cart"></i> Giỏ Hàng Của Bạn</h2>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fas fa-check-circle"></i> @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fas fa-exclamation-circle"></i> @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (Model.Items.Any())
+    {
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th style="width: 80px">Ảnh</th>
+                                <th>Tên sản phẩm</th>
+                                <th style="width: 120px" class="text-center">Đơn giá</th>
+                                <th style="width: 150px" class="text-center">Số lượng</th>
+                                <th style="width: 120px" class="text-center">Thành tiền</th>
+                                <th style="width: 100px" class="text-center">Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Items)
+                            {
+                                <tr>
+                                    <td class="text-center">
+                                        @if (!string.IsNullOrEmpty(item.Image))
+                                        {
+                                            <img src="@Url.Content(item.Image)" alt="@item.ProductName"
+                                                 style="width: 60px; height: 60px; object-fit: cover; border-radius: 4px;">
+                                        }
+                                        else
+                                        {
+                                            <div style="width: 60px; height: 60px; background: #f8f9fa; display: flex; align-items: center; justify-content: center; border-radius: 4px;">
+                                                <i class="fas fa-image text-muted"></i>
+                                            </div>
+                                        }
+                                    </td>
+                                    <td>
+                                        <div class="fw-bold">@item.ProductName</div>
+                                        <small class="text-muted">Mã SP: @item.ProductId</small>
+                                    </td>
+                                    <td class="text-center">
+                                        <span class="fw-bold text-primary">@item.Price.ToString("N0") ₫</span>
+                                    </td>
+                                    <td class="text-center">
+                                        @using (Html.BeginForm("UpdateQuantity", "Cart", FormMethod.Post, new { @class = "d-inline" }))
+                                        {
+                                            @Html.Hidden("productId", item.ProductId)
+                                            <div class="input-group input-group-sm" style="max-width: 120px;">
+                                                <input type="number" name="quantity" value="@item.Quantity"
+                                                       min="1" max="100" class="form-control text-center">
+                                                <button type="submit" class="btn btn-outline-primary" title="Cập nhật">
+                                                    <i class="fas fa-sync-alt"></i>
+                                                </button>
+                                            </div>
+                                        }
+                                    </td>
+                                    <td class="text-center">
+                                        <span class="fw-bold text-success">@item.TotalPrice.ToString("N0") ₫</span>
+                                    </td>
+                                    <td class="text-center">
+                                        @using (Html.BeginForm("RemoveItem", "Cart", FormMethod.Post, new { @class = "d-inline" }))
+                                        {
+                                            @Html.Hidden("productId", item.ProductId)
+                                            <button type="submit" class="btn btn-outline-danger btn-sm" title="Xóa sản phẩm" onclick="return confirm('Bạn có chắc muốn xóa sản phẩm này?')">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot class="table-active">
+                            <tr>
+                                <td colspan="4" class="text-end fw-bold fs-5">Tổng cộng:</td>
+                                <td class="text-center fw-bold text-success fs-5">@Model.GrandTotal.ToString("N0") ₫</td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mt-4">
+                    <a href="@Url.Action("Index", "Home")" class="btn btn-outline-secondary">
+                        <i class="fas fa-arrow-left me-2"></i>Tiếp tục mua hàng
+                    </a>
+
+                    <div class="d-flex gap-2">
+                        @using (Html.BeginForm("ClearCart", "Cart", FormMethod.Post, new { @class = "d-inline" }))
+                        {
+                            <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Bạn có chắc muốn xóa toàn bộ giỏ hàng?')">
+                                <i class="fas fa-trash me-2"></i>Xóa giỏ hàng
+                            </button>
+                        }
+
+                        <a href="@Url.Action("Checkout", "Order")" class="btn btn-primary btn-lg">
+                            <i class="fas fa-credit-card me-2"></i>Thanh toán
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="text-center py-5">
+            <i class="fas fa-shopping-cart fa-4x text-muted mb-4"></i>
+            <h3 class="text-muted mb-3">Giỏ hàng của bạn đang trống</h3>
+            <p class="text-muted mb-4">Hãy thêm sản phẩm vào giỏ hàng để tiếp tục mua sắm</p>
+            <a href="@Url.Action("Index", "Home")" class="btn btn-primary btn-lg">
+                <i class="fas fa-shopping-bag me-2"></i>Mua sắm ngay
+            </a>
+        </div>
+    }
+</div>

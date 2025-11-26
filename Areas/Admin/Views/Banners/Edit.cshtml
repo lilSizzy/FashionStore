@@ -1,0 +1,81 @@
+﻿@model FashionStore.Models.Banners
+
+@section Styles {
+    <link rel="stylesheet" href="~/Areas/Admin/Content/Banners/Create.css" />
+}
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.PageTitle = "Sửa Banner";
+}
+
+@section breadcrumb {
+    <li class="breadcrumb-item">
+        <a href="@Url.Action("Index")">Banners</a>
+    </li>
+    <li class="breadcrumb-item active">Sửa</li>
+}
+
+<div class="card p-4 shadow-sm">
+
+    @using (Html.BeginForm("Edit", "Banners", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.Id)
+
+        <!-- Ảnh hiện tại -->
+        <div class="mb-3">
+            <label>Ảnh hiện tại</label>
+            <div>
+                <img src="@Model.ImageUrl" alt="banner" style="max-width:220px;border-radius:8px" />
+            </div>
+        </div>
+
+        <!-- Chọn ảnh mới (không bắt buộc) -->
+        <div class="mb-3">
+            <label>Chọn ảnh mới (tùy chọn)</label>
+
+            <div id="dropZone" class="dropzone" onclick="document.getElementById('ImageFile').click()">
+                <p>Kéo thả ảnh vào đây hoặc bấm để chọn ảnh</p>
+            </div>
+
+            <input type="file"
+                   id="ImageFile"
+                   name="ImageFile"
+                   class="d-none"
+                   accept="image/*" />
+
+            <small id="fileName" class="text-success fw-bold"></small>
+            <img id="previewImage" />
+        </div>
+
+        <!-- Thứ tự hiển thị -->
+        <div class="mb-3" style="max-width: 180px;">
+            <label>Thứ tự hiển thị</label>
+            <input type="number"
+                   name="OrderNo"
+                   class="form-control"
+                   value="@(Model.OrderNo ?? 0)"
+                   min="0"
+                   step="1" />
+        </div>
+
+        <!-- Kích hoạt -->
+        <div class="mb-3 form-check">
+            <input type="hidden" name="IsActive" value="false" />
+            <input type="checkbox"
+                   name="IsActive"
+                   class="form-check-input"
+                   value="true"
+                   @(Model != null && Model.IsActive == true ? "checked=\"checked\"" : "") />
+            <label class="form-check-label">Kích hoạt</label>
+        </div>
+
+        <button class="btn btn-primary">Lưu thay đổi</button>
+        <a href="@Url.Action("Index")" class="btn btn-secondary">Trở lại</a>
+    }
+</div>
+
+@section Scripts {
+    <script src="~/Areas/Admin/Scripts/dragdrop-file.js"></script>
+}

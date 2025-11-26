@@ -1,0 +1,56 @@
+﻿@model IEnumerable<FashionStore.Models.Categories>
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.PageTitle = "Quản lý danh mục";
+}
+
+@section breadcrumb {
+    <li class="breadcrumb-item active">Categories</li>
+}
+
+<div class="card p-3 shadow-sm">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 class="m-0">Danh sách danh mục</h5>
+
+        <div class="d-flex" style="gap:8px;">
+            @using (Html.BeginForm("Index", "Categories", FormMethod.Get, new { area = "Admin" }))
+            {
+                <input type="text" name="q" value="@Request["q"]" class="form-control" placeholder="Tìm theo tên/slug" />
+            }
+            <a class="btn btn-primary btn-sm" href="@Url.Action("Create")">
+                <i class="fa fa-plus"></i> Thêm mới
+            </a>
+        </div>
+    </div>
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-warning">@TempData["Error"]</div>
+    }
+
+    <table class="table table-hover table-bordered bg-white">
+        <thead class="table-primary">
+            <tr>
+                <th>Tên</th>
+                <th>Slug</th>
+                <th>Danh mục cha</th>
+                <th style="width:120px;">Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var c in Model)
+            {
+                <tr>
+                    <td>@c.Name</td>
+                    <td>@c.Slug</td>
+                    <td>@(c.ParentId.HasValue ? (c.Categories2 != null ? c.Categories2.Name : "") : "(Không)")</td>
+                    <td>
+                        <a class="btn btn-warning btn-sm" href="@Url.Action("Edit", new { id = c.Id })"><i class="fa fa-edit"></i></a>
+                        <a class="btn btn-danger btn-sm" onclick="return confirm('Xóa danh mục này?')"
+                           href="@Url.Action("Delete", new { id = c.Id })"><i class="fa fa-trash"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

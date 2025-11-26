@@ -1,0 +1,70 @@
+﻿/* 🔹 Khu vực dropzone upload ảnh */
+
+.dropzone {
+    width: 100%;
+    padding: 30px;
+    background: #ffffff;
+    border: 2px dashed #0d6efd;
+    border-radius: 10px;
+    text-align: center;
+    color: #0d6efd;
+    cursor: pointer;
+    transition: .25s;
+}
+
+    .dropzone p {
+        font-size: 14px;
+        margin: 0;
+        opacity: 0.8;
+    }
+
+    .dropzone.dragover {
+        background: #e0efff;
+        border-color: #0056d6;
+        color: #0056d6;
+    }
+
+#fileName {
+    margin-top: 6px;
+    font-size: 14px;
+}
+
+/* Drag zone */
+.dropzone {
+    width: 100%;
+    padding: 30px;
+    background: #ffffff;
+    border: 2px dashed #0d6efd;
+    border-radius: 10px;
+    text-align: center;
+    color: #0d6efd;
+    cursor: pointer;
+    transition: .25s ease;
+    position: relative;
+}
+
+    .dropzone:hover {
+        background: #eaf2ff;
+    }
+
+    .dropzone.dragover {
+        background: #cfe7ff;
+        border-color: #0056d6;
+        color: #004cb8;
+        transform: scale(1.03);
+        box-shadow: 0 0 10px rgba(0, 123, 255, .4);
+    }
+
+    .dropzone.success {
+        border-color: #28a745;
+        background: #e4ffe9;
+        color: #28a745;
+    }
+
+#previewImage {
+    max-width: 150px;
+    margin-top: 12px;
+    display: none;
+    border-radius: 8px;
+    box-shadow: 0 0 6px rgba(0,0,0,0.15);
+}

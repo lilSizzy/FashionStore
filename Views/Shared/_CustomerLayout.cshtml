@@ -1,0 +1,240 @@
+﻿@{
+    Layout = null;
+    var title = ViewBag.Title ?? "Fashion Store";
+
+    // 🧩 Đảm bảo không lỗi nếu Session null
+    var role = (Session != null && Session["Role"] != null) ? Session["Role"].ToString() : "";
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@title</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+
+    <!-- Custom CSS -->
+    <link href="~/Content/customer-layout.css" rel="stylesheet" />
+    <!--Header css-->
+    <link href="~/Areas/Admin/Content/Layout/header.css" rel="stylesheet" />
+
+    
+    <link href="~/Areas/Admin/Content/Layout/footer.css" rel="stylesheet" />
+</head>
+ 
+<body>
+    <!-- 🌐 Header -->
+    <header>
+        <div class="container d-flex justify-content-between align-items-center py-3">
+
+
+
+            <img src="~/Uploads/banners/Screenshot 2025-11-03 161926.png" />
+
+
+            <!-- 🔍 Search -->
+            <form class="d-flex flex-grow-1 mx-4" method="get" action="@Url.Action("Index", "Products")" id="globalSearchForm">
+                <input type="text" class="form-control search-bar" placeholder="Tìm sản phẩm, mô tả, danh mục..."
+                       name="searchTerm" id="globalSearchInput">
+                <button class="btn btn-outline-primary" type="submit" id="globalSearchBtn">
+                    <i class="fa fa-search"></i>
+                </button>
+            </form>
+            <!-- Banner Săn Deal -->
+            <div class="deal-banner">
+                🔥 <span>SĂN DEAL CỰC SỐC - GIẢM ĐẾN 70%</span> 🔥
+                <div class="bubble" style="left:10%"></div>
+                <div class="bubble" style="left:30%; animation-delay: 1s;"></div>
+                <div class="bubble" style="left:60%; animation-delay: 2s;"></div>
+                <div class="bubble" style="left:80%; animation-delay: 3s;"></div>
+                <link rel="stylesheet" href="~/Areas/Admin/Content/Layout/header.css" />
+            </div>
+
+            <!-- 🧑 Account + Cart -->
+            <div class="d-flex align-items-center gap-3">
+                <!-- Đơn hàng của tôi -->
+                <a href="@Url.Action("MyOrder", "Order")" class="btn btn-outline-primary position-relative d-flex align-items-center gap-2
+        @(Request.Path.Contains("/Order/MyOrder") || Request.Path.Contains("/Order/OrderDetail") ? "active" : "")"
+                   title="Đơn hàng của tôi">
+                    <i class="fas fa-receipt fa-lg"></i>
+                    <span class="d-none d-md-inline">Đơn hàng</span>
+                    <!-- Badge số đơn đang chờ (tùy chọn nâng cao sau) -->
+                    @if (Session["PendingOrderCount"] != null && (int)Session["PendingOrderCount"] > 0)
+                    {
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.65rem;">
+                            @(Session["PendingOrderCount"])
+                            <span class="visually-hidden">đơn hàng mới</span>
+                        </span>
+                    }
+                </a>
+
+                <!-- tài khoản-->
+                <div class="dropdown">
+                    <a href="#" class="btn btn-outline-secondary dropdown-toggle" id="accountMenu" data-bs-toggle="dropdown">
+                        <i class="fa fa-user"></i> Tài khoản
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="accountMenu">
+                        @* 🟩 Nếu là Admin *@
+                        @if (role == "Admin")
+                        {
+                            <li>
+                                <a class="dropdown-item" href="@Url.Action("Index", "Dashboard", new { area = "Admin" })">
+                                    <i class="fa fa-gauge"></i> Dashboard
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="@Url.Action("Logout", "Account")">
+                                    <i class="fa fa-sign-out-alt"></i> Đăng xuất
+                                </a>
+                            </li>
+                        }
+                        @* 🟦 Nếu là Customer *@
+                        else if (role == "Customer")
+                        {
+                            <li>
+                                <a class="dropdown-item disabled text-muted" href="#">
+                                    <i class="fa fa-user"></i> Xin chào, @User.Identity.Name
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="@Url.Action("Logout", "Account")">
+                                    <i class="fa fa-sign-out-alt"></i> Đăng xuất
+                                </a>
+                            </li>
+                        }
+                        @* 🟨 Nếu chưa đăng nhập *@
+                        else
+                        {
+                            <li>
+                                <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">
+                                    <i class="fa fa-sign-in-alt"></i> Đăng nhập
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#registerModal">
+                                    <i class="fa fa-user-plus"></i> Đăng ký
+                                </a>
+                            </li>
+                        }
+                    </ul>
+
+                </div>
+                <!-- giỏ hàng-->
+                <a href="@Url.Action("Index", "Cart")" class="btn btn-outline-dark position-relative">
+                    <i class="fa fa-shopping-cart"></i> Giỏ hàng
+                    @{
+                        // Sửa thành CartModel
+                        var cart = Session["Cart"] as FashionStore.Models.CartModel;
+                        if (cart != null && cart.Items.Any())
+                        {
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.7em;">
+                                @cart.TotalItems
+                            </span>
+                        }
+                    }
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 🖼 Banner -->
+    <div class="banner-wrapper">
+        @RenderSection("Banner", required: false)
+    </div>
+
+    <!-- 📦 Nội dung -->
+    <main class="container my-5">
+        @RenderBody()
+    </main>
+
+    <div class="footer-container">
+        <div class="footer-section">
+            <h3>DỊCH VỤ KHÁCH HÀNG</h3>
+            <ul>
+                <li><a href="#">Trung Tâm Trợ Giúp Shopee</a></li>
+                <li><a href="#">Shopee Blog</a></li>
+                <li><a href="#">Shopee Mall</a></li>
+                <!-- Thêm các mục khác -->
+            </ul>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="footer-container">
+            <!-- Main Footer Sections - Horizontal Layout -->
+            <div class="footer-sections">
+                <!-- Dịch vụ khách hàng -->
+                <div class="footer-section">
+                    <h3 class="footer-section-title">DỊCH VỤ KHÁCH HÀNG</h3>
+                    <ul class="footer-links">
+                        <li class="footer-link"><a href="#">Trung Tâm Trợ Giúp Shopee</a></li>
+                        <li class="footer-link"><a href="#">Shopee Blog</a></li>
+                        <li class="footer-link"><a href="#">Shopee Mall</a></li>
+                        <li class="footer-link"><a href="#">Hướng Dẫn Mua Hàng/Đặt Hàng</a></li>
+                        <li class="footer-link"><a href="#">Hướng Dẫn Bán Hàng</a></li>
+                        <li class="footer-link"><a href="#">Ví ShopeePay</a></li>
+                        <li class="footer-link"><a href="#">Shopee Xu</a></li>
+                        <li class="footer-link"><a href="#">Đơn Hàng</a></li>
+                        <li class="footer-link"><a href="#">Trả Hàng/Hoàn Tiền</a></li>
+                        <li class="footer-link"><a href="#">Liên Hệ Shopee</a></li>
+                        <li class="footer-link"><a href="#">Chính Sách Bảo Hành</a></li>
+                    </ul>
+                </div>
+
+                <!-- Shopee Việt Nam -->
+                <div class="footer-section">
+                    <h3 class="footer-section-title">SHOPEE VIỆT NAM</h3>
+                    <ul class="footer-links">
+                        <li class="footer-link"><a href="#">Về Shopee</a></li>
+                        <li class="footer-link"><a href="#">Tuyển Dụng</a></li>
+                        <li class="footer-link"><a href="#">Điều Khoản Shopee</a></li>
+                        <li class="footer-link"><a href="#">Chính Sách Bảo Mật</a></li>
+                        <li class="footer-link"><a href="#">Shopee Mall</a></li>
+                        <li class="footer-link"><a href="#">Kênh Người Bán</a></li>
+                        <li class="footer-link"><a href="#">Flash Sale</a></li>
+                        <li class="footer-link"><a href="#">Tiếp Thị Liên Kết</a></li>
+                        <li class="footer-link"><a href="#">Liên Hệ Truyền Thông</a></li>
+                    </ul>
+                </div>
+            </div>
+
+
+
+
+            <!-- Footer Bottom -->
+            <div class="footer-bottom">
+                <div class="footer-info">
+                    <span class="footer-info-item">© 2024 Shopee. Tất cả các quyền được bảo lưu.</span>
+                    <span class="footer-info-item">Quốc gia & Khu vực: Singapore Indonesia Thái Lan Malaysia Việt Nam Philippines Brazil México Colombia Chile Đài Loan</span>
+                </div>
+                <div class="footer-legal">
+                    <p>Công ty TNHH Shopee</p>
+                    <p>Địa chỉ: Tầng 4-5-6, Tòa nhà Capital Place, số 29 đường Liễu Giai, Phường Ngọc Khánh, Quận Ba Đình, Thành phố Hà Nội, Việt Nam.</p>
+                    <p>© 2024 - Bản quyền thuộc về Công ty TNHH Shopee</p>
+                </div>
+            </div>
+        </div>
+
+    </footer>
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <!-- 🔐 Login Modal -->
+    @Html.Partial("~/Views/Shared/login-modal.cshtml")
+    <!-- 🧾 Register Modal -->
+    @Html.Partial("~/Views/Shared/register-modal.cshtml")
+    <!-- Global Search Script -->
+    <script src="~/Scripts/global-search.js"></script>
+    <!-- JS riêng -->
+    <script src="~/Scripts/login-modal.js"></script>
+    <script src="~/Scripts/register-modal.js"></script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

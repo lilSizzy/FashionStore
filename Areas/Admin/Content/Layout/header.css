@@ -1,0 +1,73 @@
+﻿/* ================================
+   🎨 HEADER CAM SHOPEE STYLE
+   ================================ */
+header {
+    background-color: #ee4d2d; /* cam đậm Shopee */
+    color: white;
+    padding: 10px 0;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+    /* logo */
+    header img {
+        height: 50px;
+    }
+
+    /* chỉnh container bên trong header */
+    header .container {
+        align-items: center;
+    }
+
+    /* ô tìm kiếm */
+    header .search-bar {
+        border: none;
+        border-radius: 8px;
+        padding: 10px 14px;
+        outline: none;
+        transition: 0.2s;
+        box-shadow: none;
+        background-color: white;
+    }
+
+        header .search-bar:focus {
+            border: 2px solid #ff7043; /* viền cam sáng khi focus */
+            box-shadow: 0 0 6px rgba(255, 255, 255, 0.4);
+        }
+
+    /* nút tìm kiếm */
+    header .btn-outline-primary {
+        background-color: white;
+        color: #ee4d2d;
+        border: none;
+        margin-left: 8px;
+        transition: all 0.2s ease;
+    }
+
+        header .btn-outline-primary:hover {
+            background-color: #ff7043;
+            color: white;
+        }
+
+    /* deal banner */
+    header .deal-banner {
+        color: white;
+        font-weight: bold;
+    }
+
+    /* account + cart */
+    header .btn-outline-secondary,
+    header .btn-outline-dark {
+        color: white;
+        border-color: white;
+    }
+
+        header .btn-outline-secondary:hover,
+        header .btn-outline-dark:hover {
+            background-color: white;
+            color: #ee4d2d;
+        }
+
+    /* dropdown menu */
+    header .dropdown-menu {
+        color: black;
+    }

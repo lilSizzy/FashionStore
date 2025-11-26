@@ -1,0 +1,132 @@
+﻿@model FashionStore.Models.Products
+
+@section Styles {
+    <link rel="stylesheet" href="~/Areas/Admin/Content/Products/Create.css" />
+}
+
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.PageTitle = "Chỉnh sửa sản phẩm";
+}
+
+@section breadcrumb {
+    <li class="breadcrumb-item">
+        <a href="@Url.Action("Index")">Products</a>
+    </li>
+    <li class="breadcrumb-item active">Chỉnh sửa</li>
+}
+
+<div class="card p-4 shadow-sm">
+    @using (Html.BeginForm("Edit", "Products", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.Id)
+
+        <!-- Ảnh chính -->
+        <div class="mb-4">
+            <label class="fw-semibold">Ảnh chính hiện tại</label>
+            <div>
+                <img src="@Model.MainImage" alt="Ảnh chính" style="max-width: 200px; border-radius: 6px; border: 1px solid #d3e5ff;" />
+            </div>
+
+            <label class="fw-semibold mt-3">Thay ảnh chính (kéo thả hoặc chọn)</label>
+            <div id="dropZoneMain" class="dropzone" onclick="document.getElementById('MainImageFile').click()">
+                <p>Kéo thả ảnh chính mới hoặc bấm để chọn</p>
+            </div>
+            <input type="file" id="MainImageFile" name="MainImageFile" class="d-none" accept="image/*" />
+            <small id="fileNameMain" class="text-success fw-bold"></small>
+            <img id="previewMain" />
+        </div>
+
+        <!-- Tên, giá, danh mục -->
+        <div class="mb-3">
+            <label class="fw-semibold">Tên sản phẩm *</label>
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", required = "required" })
+        </div>
+
+        <div class="mb-3">
+            <label class="fw-semibold">Giá (VNĐ) *</label>
+            @Html.TextBoxFor(m => m.Price, "{0:0.##}", new
+            {
+    @class = "form-control",
+    type = "number",
+    min = "0",
+    step = "1000",
+    required = "required"
+})
+
+        </div>
+
+        <div class="mb-3">
+            <label class="fw-semibold">Danh mục *</label>
+            @Html.DropDownListFor(
+     m => m.CategoryId,
+     (IEnumerable<SelectListItem>)ViewBag.CategoryId,
+     new { @class = "form-select" }
+                )
+        </div>
+
+
+        <!-- Màu sắc & kích cỡ -->
+        <div class="mb-3">
+            <label class="fw-semibold">Màu sắc</label>
+            @Html.TextBoxFor(m => m.Color, new { @class = "form-control" })
+        </div>
+
+        <div class="mb-3">
+            <label class="fw-semibold">Kích cỡ</label>
+            @Html.TextBoxFor(m => m.Size, new { @class = "form-control" })
+        </div>
+
+        <!-- Mô tả -->
+        <div class="mb-3">
+            <label class="fw-semibold">Mô tả</label>
+            @Html.TextAreaFor(m => m.Description, 5, 50, new { @class = "form-control" })
+        </div>
+
+        <!-- Ảnh phụ hiện có -->
+        <div class="mb-4">
+            <label class="fw-semibold">Ảnh phụ hiện có</label>
+            <div class="sub-preview" id="existingImages">
+                @foreach (var img in Model.ProductImages)
+                {
+                    <div class="position-relative d-inline-block">
+                        <img src="@img.ImageUrl" data-id="@img.Id" />
+                        <button type="button" class="btn btn-sm btn-danger btn-delete-img" data-id="@img.Id" title="Xóa ảnh này">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <!-- Thêm ảnh phụ mới -->
+        <div class="mb-4">
+            <label class="fw-semibold">Thêm ảnh phụ mới (kéo thả hoặc chọn nhiều ảnh)</label>
+
+            <div id="dropZoneSub" class="dropzone" onclick="document.getElementById('ImageFiles').click()">
+                <p>Kéo thả ảnh phụ hoặc bấm để chọn</p>
+            </div>
+            <input type="file" id="ImageFiles" name="ImageFiles" multiple accept="image/*" class="d-none" />
+
+            <div id="subPreviewContainer" class="sub-preview"></div>
+            <div id="subCount" class="sub-info-count"></div>
+            <ul id="subFileList" class="sub-file-list"></ul>
+        </div>
+
+        <button class="btn btn-primary">
+            <i class="fa fa-save"></i> Lưu thay đổi
+        </button>
+        <a href="@Url.Action("Index")" class="btn btn-secondary">
+            <i class="fa fa-arrow-left"></i> Trở lại
+        </a>
+    }
+</div>
+
+@section Scripts {
+    <script src="~/Areas/Admin/Scripts/dragdrop-file.js"></script>
+    <script src="~/Areas/Admin/Scripts/dragdrop-multi.js"></script>
+
+    <script src="~/Areas/Admin/Scripts/deleteImage.js"></script>
+}

@@ -1,0 +1,50 @@
+﻿@model IEnumerable<FashionStore.Models.Users>
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.Title = "Quản lý người dùng";
+}
+
+<h3 class="fw-bold mb-4"><i class="fa-solid fa-users me-2"></i>Quản lý người dùng</h3>
+
+<div class="text-end mb-3">
+    <a href="@Url.Action("Create", "Users")" class="btn btn-primary">
+        <i class="fa fa-plus"></i> Thêm người dùng
+    </a>
+</div>
+
+<table class="table table-bordered table-striped align-middle">
+    <thead class="table-light">
+        <tr>
+            <th>ID</th>
+            <th>Tên đăng nhập</th>
+            <th>Role</th>
+            <th>Ngày tạo</th>
+            <th class="text-center" style="width: 140px;">Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var u in Model)
+        {
+            <tr>
+                <td>@u.Id</td>
+                <td>@u.Username</td>
+                <td>
+                    <span class="badge bg-@(u.Role == "Admin" ? "danger" : "secondary")">
+                        @u.Role
+                    </span>
+                </td>
+                <td>@u.CreatedDate.Value.ToShortDateString()</td>
+                <td class="text-center">
+                    <a href="@Url.Action("Edit", "Users", new { id = u.Id })" class="btn btn-sm btn-warning">
+                        <i class="fa fa-edit"></i>
+                    </a>
+                    <a href="@Url.Action("Delete", "Users", new { id = u.Id })"
+                       onclick="return confirm('Xác nhận xóa người dùng này?');"
+                       class="btn btn-sm btn-danger">
+                        <i class="fa fa-trash"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

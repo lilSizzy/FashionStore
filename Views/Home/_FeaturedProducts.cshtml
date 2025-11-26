@@ -1,0 +1,20 @@
+﻿@model IEnumerable<FashionStore.Models.Product>
+
+<div class="product-grid">
+    @foreach (var item in Model)
+    {
+        <a class="product-card text-decoration-none" href="@Url.Action("ProductDetail", "Home", new { id = item.Id })">
+            <div class="product-thumb">
+                <img src="@item.MainImage" alt="@item.Name" loading="lazy" />
+            </div>
+            <div class="product-info">
+                <div class="product-name">@item.Name</div>
+                @if (item.CreatedDate != null)
+                {
+                    <div class="product-meta">Ngày tạo: @item.CreatedDate.Value.ToShortDateString()</div>
+                }
+                <div class="product-price">@String.Format("{0:N0} ₫", item.Price)</div>
+            </div>
+        </a>
+    }
+</div>

@@ -1,0 +1,785 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="packages\EntityFramework.6.5.1\build\EntityFramework.props" Condition="Exists('packages\EntityFramework.6.5.1\build\EntityFramework.props')" />
+  <Import Project="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2032A15F-A7D7-4531-A653-A84FC6DE5E5B}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FashionStore</RootNamespace>
+    <AssemblyName>FashionStore</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>packages\Microsoft.Web.Infrastructure.2.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.9.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>packages\Microsoft.AspNet.Mvc.5.2.9\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>packages\Microsoft.AspNet.Razor.3.2.9\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
+      <HintPath>packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\BannersController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CategoriesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ProductsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CartController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Banner.cs">
+      <DependentUpon>FashionStore.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CartModels.cs" />
+    <Compile Include="Models\Category.cs">
+      <DependentUpon>FashionStore.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FashionStore.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FashionStore.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FashionStore.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FashionStore.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FashionStore.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FashionStore.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\OrderDetail.cs">
+      <DependentUpon>FashionStore.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Order.cs">
+      <DependentUpon>FashionStore.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\OrderModel.cs" />
+    <Compile Include="Models\Product.cs">
+      <DependentUpon>FashionStore.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductImage.cs">
+      <DependentUpon>FashionStore.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\User.cs">
+      <DependentUpon>FashionStore.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ViewModels\HomeViewModel.cs" />
+    <Compile Include="Models\ViewModels\OrderHistoryViewModel.cs" />
+    <Compile Include="Models\ViewModels\ProductDetailViewModel.cs" />
+    <Compile Include="Models\ViewModels\ProductSearchVM.cs" />
+    <Compile Include="obj\Debug\.NETFramework,Version=v4.8.AssemblyAttributes.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include=".vs\FashionStore\v17\HierarchyCache.v1.txt" />
+    <Content Include="Areas\Admin\Content\Banners\Create.css" />
+    <Content Include="Areas\Admin\Content\Layout\footer.css" />
+    <Content Include="Areas\Admin\Content\Layout\header.css" />
+    <Content Include="Areas\Admin\Content\Layout\product-detail.css" />
+    <Content Include="Areas\Admin\Content\Products\Create.css" />
+    <Content Include="Areas\Admin\Content\Products\Index.css" />
+    <Content Include="Areas\Admin\Scripts\deleteImage.js" />
+    <Content Include="Areas\Admin\Scripts\dragdrop-file.js" />
+    <Content Include="Areas\Admin\Scripts\dragdrop-multi.js" />
+    <Content Include="Areas\Admin\Scripts\global-search.js" />
+    <Content Include="Areas\Admin\Scripts\prdjs.js" />
+    <Content Include="Areas\Admin\Scripts\slugify.js" />
+    <Content Include="Areas\Admin\Content\Products\adminprd.css" />
+    <Content Include="bin\FashionStore.dll" />
+    <Content Include="bin\FashionStore.pdb" />
+    <Content Include="Content\bootstrap-grid.css" />
+    <Content Include="Content\bootstrap-grid.min.css" />
+    <Content Include="Content\bootstrap-grid.rtl.css" />
+    <Content Include="Content\bootstrap-grid.rtl.min.css" />
+    <Content Include="Content\bootstrap-reboot.css" />
+    <Content Include="Content\bootstrap-reboot.min.css" />
+    <Content Include="Content\bootstrap-reboot.rtl.css" />
+    <Content Include="Content\bootstrap-reboot.rtl.min.css" />
+    <Content Include="Content\bootstrap-utilities.css" />
+    <Content Include="Content\bootstrap-utilities.min.css" />
+    <Content Include="Content\bootstrap-utilities.rtl.css" />
+    <Content Include="Content\bootstrap-utilities.rtl.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\bootstrap.rtl.css" />
+    <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\customer-layout.css" />
+    <Content Include="Content\PagedList.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Models\FashionStore.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>FashionStore.edmx</DependentUpon>
+      <LastGenOutput>FashionStore.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\FashionStore.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>FashionStore.edmx</DependentUpon>
+      <LastGenOutput>FashionStore.cs</LastGenOutput>
+    </Content>
+    <Content Include="packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll" />
+    <Content Include="packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.pdb" />
+    <Content Include="packages\bootstrap.5.2.3\bootstrap.png" />
+    <Content Include="packages\bootstrap.5.2.3\contentFiles\any\any\wwwroot\css\bootstrap-grid.css" />
+    <Content Include="packages\bootstrap.5.2.3\contentFiles\any\any\wwwroot\css\bootstrap-grid.min.css" />
+    <Content Include="packages\bootstrap.5.2.3\contentFiles\any\any\wwwroot\css\bootstrap-grid.rtl.css" />
+    <Content Include="packages\bootstrap.5.2.3\contentFiles\any\any\wwwroot\css\bootstrap-grid.rtl.min.css" />
+    <Content Include="packages\bootstrap.5.2.3\contentFiles\any\any\wwwroot\css\bootstrap-reboot.css" />
+    <Content Include="packages\bootstrap.5.2.3\contentFiles\any\any\wwwroot\css\bootstrap-reboot.min.css" />
+    <Content Include="packages\bootstrap.5.2.3\contentFiles\any\any\wwwroot\css\bootstrap-reboot.rtl.css" />
+    <Content Include="packages\bootstrap.5.2.3\contentFiles\any\any\wwwroot\css\bootstrap-reboot.rtl.min.css" />
+    <Content Include="packages\bootstrap.5.2.3\contentFiles\any\any\wwwroot\css\bootstrap-utilities.css" />
+    <Content Include="packages\bootstrap.5.2.3\contentFiles\any\any\wwwroot\css\bootstrap-utilities.min.css" />
+    <Content Include="packages\bootstrap.5.2.3\contentFiles\any\any\wwwroot\css\bootstrap-utilities.rtl.css" />
+    <Content Include="packages\bootstrap.5.2.3\contentFiles\any\any\wwwroot\css\bootstrap-utilities.rtl.min.css" />
+    <Content Include="packages\bootstrap.5.2.3\contentFiles\any\any\wwwroot\css\bootstrap.css" />
+    <Content Include="packages\bootstrap.5.2.3\contentFiles\any\any\wwwroot\css\bootstrap.min.css" />
+    <Content Include="packages\bootstrap.5.2.3\contentFiles\any\any\wwwroot\css\bootstrap.rtl.css" />
+    <Content Include="packages\bootstrap.5.2.3\contentFiles\any\any\wwwroot\css\bootstrap.rtl.min.css" />
+    <Content Include="packages\bootstrap.5.2.3\contentFiles\any\any\wwwroot\js\bootstrap.bundle.js" />
+    <Content Include="packages\bootstrap.5.2.3\contentFiles\any\any\wwwroot\js\bootstrap.bundle.min.js" />
+    <Content Include="packages\bootstrap.5.2.3\contentFiles\any\any\wwwroot\js\bootstrap.esm.js" />
+    <Content Include="packages\bootstrap.5.2.3\contentFiles\any\any\wwwroot\js\bootstrap.esm.min.js" />
+    <Content Include="packages\bootstrap.5.2.3\contentFiles\any\any\wwwroot\js\bootstrap.js" />
+    <Content Include="packages\bootstrap.5.2.3\contentFiles\any\any\wwwroot\js\bootstrap.min.js" />
+    <Content Include="packages\bootstrap.5.2.3\content\Content\bootstrap-grid.css" />
+    <Content Include="packages\bootstrap.5.2.3\content\Content\bootstrap-grid.min.css" />
+    <Content Include="packages\bootstrap.5.2.3\content\Content\bootstrap-grid.rtl.css" />
+    <Content Include="packages\bootstrap.5.2.3\content\Content\bootstrap-grid.rtl.min.css" />
+    <Content Include="packages\bootstrap.5.2.3\content\Content\bootstrap-reboot.css" />
+    <Content Include="packages\bootstrap.5.2.3\content\Content\bootstrap-reboot.min.css" />
+    <Content Include="packages\bootstrap.5.2.3\content\Content\bootstrap-reboot.rtl.css" />
+    <Content Include="packages\bootstrap.5.2.3\content\Content\bootstrap-reboot.rtl.min.css" />
+    <Content Include="packages\bootstrap.5.2.3\content\Content\bootstrap-utilities.css" />
+    <Content Include="packages\bootstrap.5.2.3\content\Content\bootstrap-utilities.min.css" />
+    <Content Include="packages\bootstrap.5.2.3\content\Content\bootstrap-utilities.rtl.css" />
+    <Content Include="packages\bootstrap.5.2.3\content\Content\bootstrap-utilities.rtl.min.css" />
+    <Content Include="packages\bootstrap.5.2.3\content\Content\bootstrap.css" />
+    <Content Include="packages\bootstrap.5.2.3\content\Content\bootstrap.min.css" />
+    <Content Include="packages\bootstrap.5.2.3\content\Content\bootstrap.rtl.css" />
+    <Content Include="packages\bootstrap.5.2.3\content\Content\bootstrap.rtl.min.css" />
+    <Content Include="packages\bootstrap.5.2.3\content\Scripts\bootstrap.bundle.js" />
+    <Content Include="packages\bootstrap.5.2.3\content\Scripts\bootstrap.bundle.min.js" />
+    <Content Include="packages\bootstrap.5.2.3\content\Scripts\bootstrap.esm.js" />
+    <Content Include="packages\bootstrap.5.2.3\content\Scripts\bootstrap.esm.min.js" />
+    <Content Include="packages\bootstrap.5.2.3\content\Scripts\bootstrap.js" />
+    <Content Include="packages\bootstrap.5.2.3\content\Scripts\bootstrap.min.js" />
+    <Content Include="packages\EntityFramework.6.5.1\build\Microsoft.Data.Entity.Build.Tasks.dll" />
+    <Content Include="packages\EntityFramework.6.5.1\Icon.png" />
+    <Content Include="packages\EntityFramework.6.5.1\lib\net40\EntityFramework.dll" />
+    <Content Include="packages\EntityFramework.6.5.1\lib\net40\EntityFramework.SqlServer.dll" />
+    <Content Include="packages\EntityFramework.6.5.1\lib\net40\EntityFramework.SqlServer.xml" />
+    <Content Include="packages\EntityFramework.6.5.1\lib\net40\EntityFramework.xml" />
+    <Content Include="packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll" />
+    <Content Include="packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll" />
+    <Content Include="packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.xml" />
+    <Content Include="packages\EntityFramework.6.5.1\lib\net45\EntityFramework.xml" />
+    <Content Include="packages\EntityFramework.6.5.1\lib\netstandard2.1\EntityFramework.dll" />
+    <Content Include="packages\EntityFramework.6.5.1\lib\netstandard2.1\EntityFramework.SqlServer.dll" />
+    <Content Include="packages\EntityFramework.6.5.1\lib\netstandard2.1\EntityFramework.SqlServer.xml" />
+    <Content Include="packages\EntityFramework.6.5.1\lib\netstandard2.1\EntityFramework.xml" />
+    <Content Include="packages\EntityFramework.6.5.1\tools\about_EntityFramework6.help.txt" />
+    <Content Include="packages\EntityFramework.6.5.1\tools\net40\any\ef6.exe" />
+    <Content Include="packages\EntityFramework.6.5.1\tools\net40\any\ef6.pdb" />
+    <Content Include="packages\EntityFramework.6.5.1\tools\net40\win-arm64\ef6.exe" />
+    <Content Include="packages\EntityFramework.6.5.1\tools\net40\win-arm64\ef6.pdb" />
+    <Content Include="packages\EntityFramework.6.5.1\tools\net40\win-x86\ef6.exe" />
+    <Content Include="packages\EntityFramework.6.5.1\tools\net40\win-x86\ef6.pdb" />
+    <Content Include="packages\EntityFramework.6.5.1\tools\net45\any\ef6.exe" />
+    <Content Include="packages\EntityFramework.6.5.1\tools\net45\any\ef6.pdb" />
+    <Content Include="packages\EntityFramework.6.5.1\tools\net45\win-arm64\ef6.exe" />
+    <Content Include="packages\EntityFramework.6.5.1\tools\net45\win-arm64\ef6.pdb" />
+    <Content Include="packages\EntityFramework.6.5.1\tools\net45\win-x86\ef6.exe" />
+    <Content Include="packages\EntityFramework.6.5.1\tools\net45\win-x86\ef6.pdb" />
+    <Content Include="packages\EntityFramework.6.5.1\tools\net6.0\any\ef6.dll" />
+    <Content Include="packages\EntityFramework.6.5.1\tools\net6.0\any\ef6.pdb" />
+    <Content Include=".vs\FashionStore.csproj.dtbcache.json" />
+    <Content Include=".vs\FashionStore\config\applicationhost.config" />
+    <Content Include=".vs\FashionStore\copilot-chat\668c6eda\sessions\01eb2914-4f02-4d98-82bb-607de7516c35" />
+    <Content Include=".vs\FashionStore\copilot-chat\668c6eda\sessions\d3ea0d52-ed03-456e-a9e1-8cc947e9cb93" />
+    <Content Include=".vs\FashionStore\copilot-chat\976d8dda\sessions\cb5849dd-41fc-4ab1-862d-7df9a1a2fe09" />
+    <Content Include=".vs\FashionStore\CopilotIndices\17.13.441.19478\CodeChunks.db" />
+    <Content Include=".vs\FashionStore\CopilotIndices\17.13.441.19478\SemanticSymbols.db" />
+    <Content Include=".vs\FashionStore\CopilotIndices\17.14.1347.20289\CodeChunks.db" />
+    <Content Include=".vs\FashionStore\CopilotIndices\17.14.1347.20289\SemanticSymbols.db" />
+    <Content Include=".vs\FashionStore\CopilotIndices\17.14.1368.60722\CodeChunks.db" />
+    <Content Include=".vs\FashionStore\CopilotIndices\17.14.1368.60722\SemanticSymbols.db" />
+    <Content Include=".vs\FashionStore\CopilotIndices\17.14.1518.61961\CodeChunks.db" />
+    <Content Include=".vs\FashionStore\CopilotIndices\17.14.1518.61961\CodeChunks.db-shm" />
+    <Content Include=".vs\FashionStore\CopilotIndices\17.14.1518.61961\CodeChunks.db-wal" />
+    <Content Include=".vs\FashionStore\CopilotIndices\17.14.1518.61961\SemanticSymbols.db" />
+    <Content Include=".vs\FashionStore\CopilotIndices\17.14.1518.61961\SemanticSymbols.db-shm" />
+    <Content Include=".vs\FashionStore\CopilotIndices\17.14.1518.61961\SemanticSymbols.db-wal" />
+    <Content Include=".vs\FashionStore\FileContentIndex\34ec5ede-9953-47b6-9ba1-de10a8bcec92.vsidx" />
+    <Content Include=".vs\FashionStore\FileContentIndex\a8666c70-b934-492b-812e-91e0bd9018b9.vsidx" />
+    <Content Include=".vs\FashionStore\FileContentIndex\c0ae40e8-f86e-4a35-9e86-b29b878b8bf3.vsidx" />
+    <Content Include=".vs\FashionStore\v17\DocumentLayout.backup.json" />
+    <Content Include=".vs\FashionStore\v17\DocumentLayout.json" />
+    <EntityDeploy Include="Models\FashionStore.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>FashionStore.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\FashionStore.edmx.diagram">
+      <DependentUpon>FashionStore.edmx</DependentUpon>
+    </Content>
+    <None Include="packages\jQuery.3.7.0\Content\Scripts\jquery-3.7.0-vsdoc.js" />
+    <Content Include="packages\jQuery.3.7.0\Content\Scripts\jquery-3.7.0.js" />
+    <Content Include="packages\jQuery.3.7.0\Content\Scripts\jquery-3.7.0.min.js" />
+    <Content Include="packages\jQuery.3.7.0\Content\Scripts\jquery-3.7.0.slim.js" />
+    <Content Include="packages\jQuery.3.7.0\Content\Scripts\jquery-3.7.0.slim.min.js" />
+    <None Include="packages\jQuery.3.7.0\Tools\jquery-3.7.0.intellisense.js" />
+    <None Include="packages\jQuery.Validation.1.19.5\Content\Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="packages\jQuery.Validation.1.19.5\Content\Scripts\jquery.validate.js" />
+    <Content Include="packages\jQuery.Validation.1.19.5\Content\Scripts\jquery.validate.min.js" />
+    <Content Include="packages\Microsoft.AspNet.Mvc.5.2.9\lib\net45\System.Web.Mvc.dll" />
+    <Content Include="packages\Microsoft.AspNet.Mvc.5.2.9\lib\net45\System.Web.Mvc.xml" />
+    <Content Include="packages\Microsoft.AspNet.Mvc.5.2.9\NET.icon.png" />
+    <Content Include="packages\Microsoft.AspNet.Mvc.5.2.9\NET_Library_EULA_ENU.txt" />
+    <Content Include="packages\Microsoft.AspNet.Razor.3.2.9\lib\net45\System.Web.Razor.dll" />
+    <Content Include="packages\Microsoft.AspNet.Razor.3.2.9\lib\net45\System.Web.Razor.xml" />
+    <Content Include="packages\Microsoft.AspNet.Razor.3.2.9\NET.icon.png" />
+    <Content Include="packages\Microsoft.AspNet.Razor.3.2.9\NET_Library_EULA_ENU.txt" />
+    <Content Include="packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll" />
+    <Content Include="packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\system.web.optimization.xml" />
+    <Content Include="packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.Helpers.dll" />
+    <Content Include="packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.Helpers.xml" />
+    <Content Include="packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.WebPages.Deployment.dll" />
+    <Content Include="packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.WebPages.Deployment.xml" />
+    <Content Include="packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.WebPages.dll" />
+    <Content Include="packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.WebPages.Razor.dll" />
+    <Content Include="packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.WebPages.Razor.xml" />
+    <Content Include="packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.WebPages.xml" />
+    <Content Include="packages\Microsoft.AspNet.WebPages.3.2.9\NET.icon.png" />
+    <Content Include="packages\Microsoft.AspNet.WebPages.3.2.9\NET_Library_EULA_ENU.txt" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\Roslyn45\csc.exe" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\Roslyn45\csi.exe" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\Roslyn45\Microsoft.Build.Tasks.CodeAnalysis.dll" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\Roslyn45\Microsoft.CodeAnalysis.CSharp.dll" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\Roslyn45\Microsoft.CodeAnalysis.CSharp.Scripting.dll" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\Roslyn45\Microsoft.CodeAnalysis.dll" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\Roslyn45\Microsoft.CodeAnalysis.Scripting.dll" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\Roslyn45\Microsoft.CodeAnalysis.VisualBasic.dll" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\Roslyn45\Microsoft.DiaSymReader.Native.amd64.dll" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\Roslyn45\Microsoft.DiaSymReader.Native.x86.dll" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\Roslyn45\System.AppContext.dll" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\Roslyn45\System.Collections.Immutable.dll" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\Roslyn45\System.Diagnostics.StackTrace.dll" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\Roslyn45\System.IO.FileSystem.dll" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\Roslyn45\System.IO.FileSystem.Primitives.dll" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\Roslyn45\System.Reflection.Metadata.dll" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\Roslyn45\vbc.exe" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\Roslyn45\VBCSCompiler.exe" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\csc.exe" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\csi.exe" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\Microsoft.Build.Tasks.CodeAnalysis.dll" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\Microsoft.CodeAnalysis.CSharp.dll" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\Microsoft.CodeAnalysis.CSharp.Scripting.dll" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\Microsoft.CodeAnalysis.dll" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\Microsoft.CodeAnalysis.Scripting.dll" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\Microsoft.CodeAnalysis.VisualBasic.dll" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\Microsoft.DiaSymReader.Native.amd64.dll" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\Microsoft.DiaSymReader.Native.x86.dll" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\Microsoft.Win32.Primitives.dll" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\System.AppContext.dll" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\System.Collections.Immutable.dll" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\System.Console.dll" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\System.Diagnostics.DiagnosticSource.dll" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\System.Diagnostics.FileVersionInfo.dll" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\System.Diagnostics.StackTrace.dll" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\System.Globalization.Calendars.dll" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\System.IO.Compression.dll" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\System.IO.Compression.ZipFile.dll" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\System.IO.FileSystem.dll" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\System.IO.FileSystem.Primitives.dll" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\System.Net.Http.dll" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\System.Net.Sockets.dll" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\System.Reflection.Metadata.dll" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\System.Runtime.InteropServices.RuntimeInformation.dll" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\System.Security.Cryptography.Algorithms.dll" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\System.Security.Cryptography.Encoding.dll" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\System.Security.Cryptography.Primitives.dll" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\System.Security.Cryptography.X509Certificates.dll" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\System.Text.Encoding.CodePages.dll" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\System.Threading.Tasks.Extensions.dll" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\System.ValueTuple.dll" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\System.Xml.ReaderWriter.dll" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\System.Xml.XmlDocument.dll" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\System.Xml.XPath.dll" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\System.Xml.XPath.XDocument.dll" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\vbc.exe" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\VBCSCompiler.exe" />
+    <Content Include="packages\Microsoft.EntityFrameworkCore.Tools.9.0.10\Icon.png" />
+    <Content Include="packages\Microsoft.EntityFrameworkCore.Tools.9.0.10\tools\about_EntityFrameworkCore.help.txt" />
+    <Content Include="packages\Microsoft.EntityFrameworkCore.Tools.9.0.10\tools\net472\any\ef.exe" />
+    <Content Include="packages\Microsoft.EntityFrameworkCore.Tools.9.0.10\tools\net472\win-arm64\ef.exe" />
+    <Content Include="packages\Microsoft.EntityFrameworkCore.Tools.9.0.10\tools\net472\win-x86\ef.exe" />
+    <Content Include="packages\Microsoft.EntityFrameworkCore.Tools.9.0.10\tools\netcoreapp2.0\any\ef.dll" />
+    <Content Include="packages\Microsoft.jQuery.Unobtrusive.Validation.3.2.11\Content\Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="packages\Microsoft.jQuery.Unobtrusive.Validation.3.2.11\Content\Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="packages\Microsoft.Web.Infrastructure.2.0.0\lib\net40\Microsoft.Web.Infrastructure.dll" />
+    <Content Include="packages\Microsoft.Web.Infrastructure.2.0.0\NET.icon.png" />
+    <Content Include="packages\Microsoft.Web.Infrastructure.2.0.0\NET_Library_EULA_ENU.txt" />
+    <Content Include="packages\Modernizr.2.8.3\Content\Scripts\modernizr-2.8.3.js" />
+    <Content Include="packages\Newtonsoft.Json.13.0.3\lib\net20\Newtonsoft.Json.dll" />
+    <Content Include="packages\Newtonsoft.Json.13.0.3\lib\net20\Newtonsoft.Json.xml" />
+    <Content Include="packages\Newtonsoft.Json.13.0.3\lib\net35\Newtonsoft.Json.dll" />
+    <Content Include="packages\Newtonsoft.Json.13.0.3\lib\net35\Newtonsoft.Json.xml" />
+    <Content Include="packages\Newtonsoft.Json.13.0.3\lib\net40\Newtonsoft.Json.dll" />
+    <Content Include="packages\Newtonsoft.Json.13.0.3\lib\net40\Newtonsoft.Json.xml" />
+    <Content Include="packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll" />
+    <Content Include="packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.xml" />
+    <Content Include="packages\Newtonsoft.Json.13.0.3\lib\net6.0\Newtonsoft.Json.dll" />
+    <Content Include="packages\Newtonsoft.Json.13.0.3\lib\net6.0\Newtonsoft.Json.xml" />
+    <Content Include="packages\Newtonsoft.Json.13.0.3\lib\netstandard1.0\Newtonsoft.Json.dll" />
+    <Content Include="packages\Newtonsoft.Json.13.0.3\lib\netstandard1.0\Newtonsoft.Json.xml" />
+    <Content Include="packages\Newtonsoft.Json.13.0.3\lib\netstandard1.3\Newtonsoft.Json.dll" />
+    <Content Include="packages\Newtonsoft.Json.13.0.3\lib\netstandard1.3\Newtonsoft.Json.xml" />
+    <Content Include="packages\Newtonsoft.Json.13.0.3\lib\netstandard2.0\Newtonsoft.Json.dll" />
+    <Content Include="packages\Newtonsoft.Json.13.0.3\lib\netstandard2.0\Newtonsoft.Json.xml" />
+    <Content Include="packages\Newtonsoft.Json.13.0.3\packageIcon.png" />
+    <Content Include="packages\WebGrease.1.6.0\lib\WebGrease.dll" />
+    <Content Include="packages\WebGrease.1.6.0\tools\WG.EXE" />
+    <Content Include="Scripts\bootstrap.bundle.js" />
+    <Content Include="Scripts\bootstrap.bundle.min.js" />
+    <Content Include="Scripts\bootstrap.esm.js" />
+    <Content Include="Scripts\bootstrap.esm.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Areas\Admin\Views\web.config" />
+    <Content Include="Areas\Admin\Views\Shared\_AdminLayout.cshtml" />
+    <Content Include="Areas\Admin\Views\Dashboard\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Banners\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Banners\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Banners\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Categories\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Categories\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Categories\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Products\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Products\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Products\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\Edit.cshtml" />
+    <Content Include="packages\Antlr.3.5.0.2\.signature.p7s" />
+    <Content Include="packages\Antlr.3.5.0.2\Antlr.3.5.0.2.nupkg" />
+    <Content Include="packages\bootstrap.5.2.3\.signature.p7s" />
+    <Content Include="packages\bootstrap.5.2.3\bootstrap.5.2.3.nupkg" />
+    <Content Include="packages\bootstrap.5.2.3\contentFiles\any\any\wwwroot\css\bootstrap-grid.css.map" />
+    <Content Include="packages\bootstrap.5.2.3\contentFiles\any\any\wwwroot\css\bootstrap-grid.min.css.map" />
+    <Content Include="packages\bootstrap.5.2.3\contentFiles\any\any\wwwroot\css\bootstrap-grid.rtl.css.map" />
+    <Content Include="packages\bootstrap.5.2.3\contentFiles\any\any\wwwroot\css\bootstrap-grid.rtl.min.css.map" />
+    <Content Include="packages\bootstrap.5.2.3\contentFiles\any\any\wwwroot\css\bootstrap-reboot.css.map" />
+    <Content Include="packages\bootstrap.5.2.3\contentFiles\any\any\wwwroot\css\bootstrap-reboot.min.css.map" />
+    <Content Include="packages\bootstrap.5.2.3\contentFiles\any\any\wwwroot\css\bootstrap-reboot.rtl.css.map" />
+    <Content Include="packages\bootstrap.5.2.3\contentFiles\any\any\wwwroot\css\bootstrap-reboot.rtl.min.css.map" />
+    <Content Include="packages\bootstrap.5.2.3\contentFiles\any\any\wwwroot\css\bootstrap-utilities.css.map" />
+    <Content Include="packages\bootstrap.5.2.3\contentFiles\any\any\wwwroot\css\bootstrap-utilities.min.css.map" />
+    <Content Include="packages\bootstrap.5.2.3\contentFiles\any\any\wwwroot\css\bootstrap-utilities.rtl.css.map" />
+    <Content Include="packages\bootstrap.5.2.3\contentFiles\any\any\wwwroot\css\bootstrap-utilities.rtl.min.css.map" />
+    <Content Include="packages\bootstrap.5.2.3\contentFiles\any\any\wwwroot\css\bootstrap.css.map" />
+    <Content Include="packages\bootstrap.5.2.3\contentFiles\any\any\wwwroot\css\bootstrap.min.css.map" />
+    <Content Include="packages\bootstrap.5.2.3\contentFiles\any\any\wwwroot\css\bootstrap.rtl.css.map" />
+    <Content Include="packages\bootstrap.5.2.3\contentFiles\any\any\wwwroot\css\bootstrap.rtl.min.css.map" />
+    <Content Include="packages\bootstrap.5.2.3\contentFiles\any\any\wwwroot\js\bootstrap.bundle.js.map" />
+    <Content Include="packages\bootstrap.5.2.3\contentFiles\any\any\wwwroot\js\bootstrap.bundle.min.js.map" />
+    <Content Include="packages\bootstrap.5.2.3\contentFiles\any\any\wwwroot\js\bootstrap.esm.js.map" />
+    <Content Include="packages\bootstrap.5.2.3\contentFiles\any\any\wwwroot\js\bootstrap.esm.min.js.map" />
+    <Content Include="packages\bootstrap.5.2.3\contentFiles\any\any\wwwroot\js\bootstrap.js.map" />
+    <Content Include="packages\bootstrap.5.2.3\contentFiles\any\any\wwwroot\js\bootstrap.min.js.map" />
+    <Content Include="packages\bootstrap.5.2.3\content\Content\bootstrap-grid.css.map" />
+    <Content Include="packages\bootstrap.5.2.3\content\Content\bootstrap-grid.min.css.map" />
+    <Content Include="packages\bootstrap.5.2.3\content\Content\bootstrap-grid.rtl.css.map" />
+    <Content Include="packages\bootstrap.5.2.3\content\Content\bootstrap-grid.rtl.min.css.map" />
+    <Content Include="packages\bootstrap.5.2.3\content\Content\bootstrap-reboot.css.map" />
+    <Content Include="packages\bootstrap.5.2.3\content\Content\bootstrap-reboot.min.css.map" />
+    <Content Include="packages\bootstrap.5.2.3\content\Content\bootstrap-reboot.rtl.css.map" />
+    <Content Include="packages\bootstrap.5.2.3\content\Content\bootstrap-reboot.rtl.min.css.map" />
+    <Content Include="packages\bootstrap.5.2.3\content\Content\bootstrap-utilities.css.map" />
+    <Content Include="packages\bootstrap.5.2.3\content\Content\bootstrap-utilities.min.css.map" />
+    <Content Include="packages\bootstrap.5.2.3\content\Content\bootstrap-utilities.rtl.css.map" />
+    <Content Include="packages\bootstrap.5.2.3\content\Content\bootstrap-utilities.rtl.min.css.map" />
+    <Content Include="packages\bootstrap.5.2.3\content\Content\bootstrap.css.map" />
+    <Content Include="packages\bootstrap.5.2.3\content\Content\bootstrap.min.css.map" />
+    <Content Include="packages\bootstrap.5.2.3\content\Content\bootstrap.rtl.css.map" />
+    <Content Include="packages\bootstrap.5.2.3\content\Content\bootstrap.rtl.min.css.map" />
+    <Content Include="packages\bootstrap.5.2.3\content\Scripts\bootstrap.bundle.js.map" />
+    <Content Include="packages\bootstrap.5.2.3\content\Scripts\bootstrap.bundle.min.js.map" />
+    <Content Include="packages\bootstrap.5.2.3\content\Scripts\bootstrap.esm.js.map" />
+    <Content Include="packages\bootstrap.5.2.3\content\Scripts\bootstrap.esm.min.js.map" />
+    <Content Include="packages\bootstrap.5.2.3\content\Scripts\bootstrap.js.map" />
+    <Content Include="packages\bootstrap.5.2.3\content\Scripts\bootstrap.min.js.map" />
+    <Content Include="packages\EntityFramework.6.5.1\.signature.p7s" />
+    <Content Include="packages\EntityFramework.6.5.1\buildTransitive\EntityFramework.props" />
+    <Content Include="packages\EntityFramework.6.5.1\buildTransitive\EntityFramework.targets" />
+    <Content Include="packages\EntityFramework.6.5.1\buildTransitive\net6.0\EntityFramework.props" />
+    <Content Include="packages\EntityFramework.6.5.1\buildTransitive\net6.0\EntityFramework.targets" />
+    <Content Include="packages\EntityFramework.6.5.1\build\EntityFramework.DefaultItems.props" />
+    <Content Include="packages\EntityFramework.6.5.1\build\EntityFramework.props" />
+    <Content Include="packages\EntityFramework.6.5.1\build\EntityFramework.targets" />
+    <Content Include="packages\EntityFramework.6.5.1\build\net6.0\EntityFramework.props" />
+    <Content Include="packages\EntityFramework.6.5.1\build\net6.0\EntityFramework.targets" />
+    <Content Include="packages\EntityFramework.6.5.1\content\net40\App.config.install.xdt" />
+    <Content Include="packages\EntityFramework.6.5.1\content\net40\App.config.transform" />
+    <Content Include="packages\EntityFramework.6.5.1\content\net40\Web.config.install.xdt" />
+    <Content Include="packages\EntityFramework.6.5.1\content\net40\Web.config.transform" />
+    <Content Include="packages\EntityFramework.6.5.1\EntityFramework.6.5.1.nupkg" />
+    <Content Include="packages\EntityFramework.6.5.1\README.md" />
+    <Content Include="packages\EntityFramework.6.5.1\tools\EntityFramework6.PS2.psd1" />
+    <Content Include="packages\EntityFramework.6.5.1\tools\EntityFramework6.PS2.psm1" />
+    <Content Include="packages\EntityFramework.6.5.1\tools\EntityFramework6.psd1" />
+    <Content Include="packages\EntityFramework.6.5.1\tools\EntityFramework6.psm1" />
+    <Content Include="packages\EntityFramework.6.5.1\tools\init.ps1" />
+    <Content Include="packages\EntityFramework.6.5.1\tools\install.ps1" />
+    <Content Include="packages\EntityFramework.6.5.1\tools\net6.0\any\ef6.runtimeconfig.json" />
+    <Content Include="packages\jQuery.3.7.0\.signature.p7s" />
+    <Content Include="packages\jQuery.3.7.0\Content\Scripts\jquery-3.7.0.min.map" />
+    <Content Include="packages\jQuery.3.7.0\Content\Scripts\jquery-3.7.0.slim.min.map" />
+    <Content Include="packages\jQuery.3.7.0\jQuery.3.7.0.nupkg" />
+    <Content Include="packages\jQuery.3.7.0\Tools\common.ps1" />
+    <Content Include="packages\jQuery.3.7.0\Tools\install.ps1" />
+    <Content Include="packages\jQuery.3.7.0\Tools\uninstall.ps1" />
+    <Content Include="packages\jQuery.Validation.1.19.5\.signature.p7s" />
+    <Content Include="packages\jQuery.Validation.1.19.5\jQuery.Validation.1.19.5.nupkg" />
+    <Content Include="packages\Microsoft.AspNet.Mvc.5.2.9\.signature.p7s" />
+    <Content Include="packages\Microsoft.AspNet.Mvc.5.2.9\Content\Web.config.install.xdt" />
+    <Content Include="packages\Microsoft.AspNet.Mvc.5.2.9\Content\Web.config.uninstall.xdt" />
+    <Content Include="packages\Microsoft.AspNet.Mvc.5.2.9\Microsoft.AspNet.Mvc.5.2.9.nupkg" />
+    <Content Include="packages\Microsoft.AspNet.Razor.3.2.9\.signature.p7s" />
+    <Content Include="packages\Microsoft.AspNet.Razor.3.2.9\Microsoft.AspNet.Razor.3.2.9.nupkg" />
+    <Content Include="packages\Microsoft.AspNet.Web.Optimization.1.1.3\.signature.p7s" />
+    <Content Include="packages\Microsoft.AspNet.Web.Optimization.1.1.3\Microsoft.AspNet.Web.Optimization.1.1.3.nupkg" />
+    <Content Include="packages\Microsoft.AspNet.WebPages.3.2.9\.signature.p7s" />
+    <Content Include="packages\Microsoft.AspNet.WebPages.3.2.9\Content\Web.config.install.xdt" />
+    <Content Include="packages\Microsoft.AspNet.WebPages.3.2.9\Content\Web.config.uninstall.xdt" />
+    <Content Include="packages\Microsoft.AspNet.WebPages.3.2.9\Microsoft.AspNet.WebPages.3.2.9.nupkg" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\.signature.p7s" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.Extensions.props" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.Extensions.props" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\content\net45\app.config.install.xdt" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\content\net45\app.config.uninstall.xdt" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\content\net45\web.config.install.xdt" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\content\net45\web.config.uninstall.xdt" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\content\net46\app.config.install.xdt" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\content\net46\app.config.uninstall.xdt" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\content\net46\web.config.install.xdt" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\content\net46\web.config.uninstall.xdt" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1.nupkg" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\net45\install.ps1" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\net45\uninstall.ps1" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\Roslyn45\csc.exe.config" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\Roslyn45\csc.rsp" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\Roslyn45\csi.rsp" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\Roslyn45\Microsoft.CSharp.Core.targets" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\Roslyn45\Microsoft.VisualBasic.Core.targets" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\Roslyn45\vbc.exe.config" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\Roslyn45\vbc.rsp" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\Roslyn45\VBCSCompiler.exe.config" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\csc.exe.config" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\csc.rsp" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\csi.exe.config" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\csi.rsp" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\Microsoft.CSharp.Core.targets" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\Microsoft.Managed.Core.targets" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\Microsoft.VisualBasic.Core.targets" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\vbc.exe.config" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\vbc.rsp" />
+    <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\VBCSCompiler.exe.config" />
+    <Content Include="packages\Microsoft.EntityFrameworkCore.Tools.9.0.10\.signature.p7s" />
+    <Content Include="packages\Microsoft.EntityFrameworkCore.Tools.9.0.10\docs\PACKAGE.md" />
+    <Content Include="packages\Microsoft.EntityFrameworkCore.Tools.9.0.10\Microsoft.EntityFrameworkCore.Tools.9.0.10.nupkg" />
+    <Content Include="packages\Microsoft.EntityFrameworkCore.Tools.9.0.10\tools\EntityFrameworkCore.PS2.psd1" />
+    <Content Include="packages\Microsoft.EntityFrameworkCore.Tools.9.0.10\tools\EntityFrameworkCore.PS2.psm1" />
+    <Content Include="packages\Microsoft.EntityFrameworkCore.Tools.9.0.10\tools\EntityFrameworkCore.psd1" />
+    <Content Include="packages\Microsoft.EntityFrameworkCore.Tools.9.0.10\tools\EntityFrameworkCore.psm1" />
+    <Content Include="packages\Microsoft.EntityFrameworkCore.Tools.9.0.10\tools\init.ps1" />
+    <Content Include="packages\Microsoft.EntityFrameworkCore.Tools.9.0.10\tools\netcoreapp2.0\any\ef.runtimeconfig.json" />
+    <Content Include="packages\Microsoft.jQuery.Unobtrusive.Validation.3.2.11\.signature.p7s" />
+    <Content Include="packages\Microsoft.jQuery.Unobtrusive.Validation.3.2.11\Microsoft.jQuery.Unobtrusive.Validation.3.2.11.nupkg" />
+    <Content Include="packages\Microsoft.Web.Infrastructure.2.0.0\.signature.p7s" />
+    <Content Include="packages\Microsoft.Web.Infrastructure.2.0.0\Microsoft.Web.Infrastructure.2.0.0.nupkg" />
+    <Content Include="packages\Modernizr.2.8.3\.signature.p7s" />
+    <Content Include="packages\Modernizr.2.8.3\Modernizr.2.8.3.nupkg" />
+    <Content Include="packages\Modernizr.2.8.3\Tools\common.ps1" />
+    <Content Include="packages\Modernizr.2.8.3\Tools\install.ps1" />
+    <Content Include="packages\Modernizr.2.8.3\Tools\uninstall.ps1" />
+    <Content Include="packages\Newtonsoft.Json.13.0.3\.signature.p7s" />
+    <Content Include="packages\Newtonsoft.Json.13.0.3\LICENSE.md" />
+    <Content Include="packages\Newtonsoft.Json.13.0.3\Newtonsoft.Json.13.0.3.nupkg" />
+    <Content Include="packages\Newtonsoft.Json.13.0.3\README.md" />
+    <Content Include="packages\WebGrease.1.6.0\.signature.p7s" />
+    <Content Include="packages\WebGrease.1.6.0\WebGrease.1.6.0.nupkg" />
+    <None Include="Scripts\jquery-3.7.0.intellisense.js" />
+    <Content Include="Scripts\jquery-3.7.0.js" />
+    <Content Include="Scripts\jquery-3.7.0.min.js" />
+    <Content Include="Scripts\jquery-3.7.0.slim.js" />
+    <Content Include="Scripts\jquery-3.7.0.slim.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\login-modal.js" />
+    <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\register-modal.js" />
+    <Content Include="Uploads\banners\20f80cd7-6647-41bc-a186-311824bb37cc.jpg" />
+    <Content Include="Uploads\banners\8a92b3ef-17e0-49de-b44a-fba04731609a.jpg" />
+    <Content Include="Uploads\banners\e09e9054-3e00-489c-8f25-48cf03938700.jpg" />
+    <Content Include="Uploads\banners\vn-50009109-727a24a85a60935da5ccb9008298f681.png" />
+    <Content Include="Uploads\ProductImages\aokak.jpg" />
+    <Content Include="Uploads\ProductImages\aooo.jpg" />
+    <Content Include="Uploads\ProductImages\huu.jpg" />
+    <Content Include="Uploads\ProductImages\73741c8b-b9a6-4bac-a9a1-b9fa76e2f1ce.jpg" />
+    <Content Include="Uploads\ProductImages\950ebcd9-17bc-416a-a4a8-bfa44da245f9.jpg" />
+    <Content Include="Uploads\ProductImages\a69ae2b0-e59c-402d-a0a9-5c6aec8790f4.jpg" />
+    <Content Include="Uploads\ProductImages\aoam.jpg" />
+    <Content Include="Uploads\ProductImages\aonau.jpg" />
+    <Content Include="Uploads\ProductImages\ba5025b2-caf2-42bb-86c2-1fcae43901b1.jpg" />
+    <Content Include="Uploads\banners\Screenshot 2025-11-03 161926.png" />
+    <Content Include="Uploads\ProductImages\ao-thun-1.jpg" />
+    <Content Include="Uploads\ProductImages\cahnnn.jpg" />
+    <Content Include="Uploads\ProductImages\chann.jpg" />
+    <Content Include="Uploads\ProductImages\dam1.jpg" />
+    <Content Include="Uploads\ProductImages\dam2.jpg" />
+    <Content Include="Uploads\ProductImages\dam3.jpg" />
+    <Content Include="Uploads\ProductImages\dam4.jpg" />
+    <Content Include="Uploads\ProductImages\gaubongvit.jpg" />
+    <Content Include="Uploads\ProductImages\hh.jpg" />
+    <Content Include="Uploads\ProductImages\huuu.jpg" />
+    <Content Include="Uploads\ProductImages\vit.jpg" />
+    <Content Include="Uploads\products\01333829-fc0d-4b0d-b61e-64bde040c2d7.jpg" />
+    <Content Include="Uploads\products\a2.jpg" />
+    <Content Include="Uploads\products\a3.jpg" />
+    <Content Include="Uploads\products\aa1.jpg" />
+    <Content Include="Uploads\products\d2b88b13-2d2b-4c3a-a779-d7d1d9bca44b.jpg" />
+    <Content Include="Uploads\products\edd60b82-7912-468c-8826-034c054f190a.jpg" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_CustomerLayout.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\_FeaturedProducts.cshtml" />
+    <Content Include="Views\Home\_NewProducts.cshtml" />
+    <Content Include="Views\Home\ProductDetail.cshtml" />
+    <Content Include="Views\Home\_SimilarProducts.cshtml" />
+    <Content Include="Views\Home\_TopDeals.cshtml" />
+    <Content Include="Views\Shared\login-modal.cshtml" />
+    <Content Include="Views\Shared\register-modal.cshtml" />
+    <Content Include="Views\Cart\Index.cshtml" />
+    <Content Include="Views\Order\Checkout.cshtml" />
+    <Content Include="Views\Order\OrderSuccess.cshtml" />
+    <Content Include="Views\Order\MyOrder.cshtml" />
+    <Content Include="Views\Order\OrderDetail.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Areas\Admin\Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\bootstrap.rtl.min.css.map" />
+    <Content Include="Content\bootstrap.rtl.css.map" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-utilities.rtl.min.css.map" />
+    <Content Include="Content\bootstrap-utilities.rtl.css.map" />
+    <Content Include="Content\bootstrap-utilities.min.css.map" />
+    <Content Include="Content\bootstrap-utilities.css.map" />
+    <Content Include="Content\bootstrap-reboot.rtl.min.css.map" />
+    <Content Include="Content\bootstrap-reboot.rtl.css.map" />
+    <Content Include="Content\bootstrap-reboot.min.css.map" />
+    <Content Include="Content\bootstrap-reboot.css.map" />
+    <Content Include="Content\bootstrap-grid.rtl.min.css.map" />
+    <Content Include="Content\bootstrap-grid.rtl.css.map" />
+    <Content Include="Content\bootstrap-grid.min.css.map" />
+    <Content Include="Content\bootstrap-grid.css.map" />
+    <None Include="packages.config" />
+    <Content Include="Scripts\bootstrap.min.js.map" />
+    <Content Include="Scripts\bootstrap.js.map" />
+    <Content Include="Scripts\bootstrap.esm.min.js.map" />
+    <Content Include="Scripts\bootstrap.esm.js.map" />
+    <Content Include="Scripts\bootstrap.bundle.min.js.map" />
+    <Content Include="Scripts\bootstrap.bundle.js.map" />
+    <Content Include="Scripts\jquery-3.7.0.slim.min.map" />
+    <Content Include="Scripts\jquery-3.7.0.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>55401</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:55401/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('packages\EntityFramework.6.5.1\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\EntityFramework.6.5.1\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('packages\EntityFramework.6.5.1\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\EntityFramework.6.5.1\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="packages\EntityFramework.6.5.1\build\EntityFramework.targets" Condition="Exists('packages\EntityFramework.6.5.1\build\EntityFramework.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

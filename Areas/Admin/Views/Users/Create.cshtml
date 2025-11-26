@@ -1,0 +1,55 @@
+﻿@model FashionStore.Models.Users
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.Title = "Thêm người dùng mới";
+}
+
+@section breadcrumb {
+    <li class="breadcrumb-item active">Thêm người dùng mới</li>
+}
+
+<div class="card shadow-sm border-0">
+    <div class="card-header bg-primary text-white fw-semibold">
+        <i class="fa-solid fa-user-plus me-2"></i> Thêm người dùng mới
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm("Create", "Users", FormMethod.Post, new { area = "Admin", @class = "needs-validation", novalidate = "novalidate" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="mb-3">
+                @Html.LabelFor(m => m.Username, new { @class = "form-label fw-semibold" })
+                @Html.TextBoxFor(m => m.Username, new { @class = "form-control", placeholder = "Nhập tên đăng nhập" })
+                @Html.ValidationMessageFor(m => m.Username, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="mb-3">
+                @Html.LabelFor(m => m.PasswordHash, "Mật khẩu", new { @class = "form-label fw-semibold" })
+                @Html.PasswordFor(m => m.PasswordHash, new { @class = "form-control", placeholder = "Nhập mật khẩu" })
+                @Html.ValidationMessageFor(m => m.PasswordHash, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="mb-3">
+                @Html.LabelFor(m => m.Role, "Vai trò", new { @class = "form-label fw-semibold" })
+                @Html.DropDownListFor(m => m.Role,
+                    new SelectList(new[] {
+                        new { Value = "Customer", Text = "Customer" },
+                        new { Value = "Admin", Text = "Admin" }
+                    }, "Value", "Text", Model.Role),
+                    "-- Chọn vai trò --",
+                    new { @class = "form-select" })
+                @Html.ValidationMessageFor(m => m.Role, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="text-end">
+                <a href="@Url.Action("Index", "Users", new { area = "Admin" })" class="btn btn-secondary">
+                    <i class="fa-solid fa-arrow-left"></i> Quay lại
+                </a>
+                <button type="submit" class="btn btn-success">
+                    <i class="fa-solid fa-floppy-disk"></i> Lưu
+                </button>
+            </div>
+        }
+    </div>
+</div>

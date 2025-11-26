@@ -1,0 +1,47 @@
+﻿@model FashionStore.Models.Categories
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.PageTitle = "Thêm danh mục";
+}
+@section breadcrumb {
+    <li class="breadcrumb-item"><a href="@Url.Action("Index")">Categories</a></li>
+    <li class="breadcrumb-item active">Thêm</li>
+}
+
+<div class="card p-4 shadow-sm">
+    @using (Html.BeginForm("Create", "Categories", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="mb-3">
+            <label>Tên danh mục</label>
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @id = "catName", @required = "required" })
+        </div>
+
+        <div class="mb-3">
+            <label>Slug</label>
+            @Html.TextBoxFor(m => m.Slug, new { @class = "form-control", @id = "catSlug", placeholder = "Tự tạo từ tên nếu để trống" })
+        </div>
+
+        <div class="mb-3" style="max-width:320px;">
+            <label>Danh mục cha</label>
+            <select name="ParentId" class="form-control">
+                <option value="0">(Không)</option>
+                @foreach (var p in (SelectList)ViewBag.ParentId)
+                {
+                    <option value="@p.Value">@p.Text</option>
+                }
+            </select>
+        </div>
+
+        <button class="btn btn-success">Lưu</button>
+        <a href="@Url.Action("Index")" class="btn btn-secondary">Trở lại</a>
+    }
+</div>
+
+@section Scripts {
+    <script src="~/Areas/Admin/Scripts/slugify.js"></script>
+    <script>
+        Slugify.bind("#catName", "#catSlug");
+    </script>
+}

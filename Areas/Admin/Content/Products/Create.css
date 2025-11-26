@@ -1,0 +1,139 @@
+﻿.dropzone {
+    width: 100%;
+    padding: 30px;
+    background: #ffffff;
+    border: 2px dashed #0d6efd;
+    border-radius: 10px;
+    text-align: center;
+    color: #0d6efd;
+    cursor: pointer;
+    transition: .25s ease;
+    position: relative;
+}
+
+    .dropzone:hover {
+        background: #eaf2ff;
+    }
+
+    .dropzone.dragover {
+        background: #cfe7ff;
+        border-color: #0056d6;
+        color: #004cb8;
+        transform: scale(1.03);
+        box-shadow: 0 0 10px rgba(0, 123, 255, .4);
+    }
+
+    .dropzone.success {
+        border-color: #28a745;
+        background: #e4ffe9;
+        color: #28a745;
+    }
+
+#previewMain {
+    max-width: 180px;
+    margin-top: 12px;
+    display: none;
+    border-radius: 8px;
+    box-shadow: 0 0 6px rgba(0,0,0,0.15);
+}
+
+#fileNameMain {
+    margin-top: 6px;
+    font-size: 14px;
+}
+
+/* Vùng preview ảnh phụ */
+.sub-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+    .sub-preview img {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 6px;
+        border: 1px solid #d3e5ff;
+        transition: .25s;
+    }
+
+        .sub-preview img:hover {
+            transform: scale(1.05);
+            border-color: #0d6efd;
+        }
+
+/* Thông tin số lượng & danh sách file ảnh phụ */
+.sub-info-count {
+    margin-top: 8px;
+    font-weight: 600;
+    color: #0d6efd;
+}
+
+.sub-file-list {
+    margin-top: 6px;
+    padding-left: 18px;
+}
+
+    .sub-file-list li {
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+.sub-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+    .sub-preview img {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 6px;
+        border: 1px solid #d3e5ff;
+        transition: .25s;
+    }
+
+        .sub-preview img:hover {
+            transform: scale(1.05);
+            border-color: #0d6efd;
+        }
+
+/* Ảnh phụ hiện có trong Edit */
+#existingImages {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+    #existingImages img {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 6px;
+        border: 1px solid #d3e5ff;
+    }
+
+.btn-delete-img {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    padding: 0;
+    font-size: 12px;
+    line-height: 1;
+}
+
+select.form-select {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    color: #000 !important;
+    background: #fff !important;
+    border: 1px solid #ccc !important;
+}

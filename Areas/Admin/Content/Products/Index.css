@@ -1,0 +1,17 @@
+﻿.product-thumb {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid #dbe8ff;
+    transition: .25s;
+}
+
+    .product-thumb:hover {
+        transform: scale(1.05);
+        border-color: #0d6efd;
+    }
+
+.table td, .table th {
+    vertical-align: middle !important;
+}

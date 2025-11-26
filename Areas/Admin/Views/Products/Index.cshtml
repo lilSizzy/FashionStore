@@ -1,0 +1,371 @@
+﻿@model FashionStore.Models.ViewModels.ProductSearchVM
+
+@{
+    ViewBag.Title = "Quản lý sản phẩm";
+    int itemsPerPage = 5;
+    int totalPages = (int)Math.Ceiling((double)Model.TotalCount / itemsPerPage);
+    int currentPage = Model.Page;
+}
+
+<link rel="stylesheet" href="~/Areas/Admin/Content/Products/adminprd.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<div class="container-fluid">
+    <!-- HEADER -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="d-flex justify-content-between align-items-start">
+                <div class="flex-grow-1">
+                    <h2 class="mb-1"><i class="fas fa-boxes text-primary"></i> Quản lý sản phẩm</h2>
+                    <p class="text-muted mb-0">Quản lý và theo dõi tất cả sản phẩm trong cửa hàng</p>
+                </div>
+                <div class="d-flex align-items-center gap-3">
+                    <div class="stats-card">
+                        <div class="text-center">
+                            <h3 class="mb-0">@Model.TotalCount</h3>
+                            <small>Tổng sản phẩm</small>
+                        </div>
+                    </div>
+                    <a href="javascript:history.back()" class="btn btn-outline-secondary" id="backBtn">
+                        <i class="fas fa-arrow-left mr-2"></i>Quay lại
+                    </a>
+                </div>
+            </div>
+            <hr class="mt-3 header-divider">
+        </div>
+    </div>
+
+    <!-- TÌM KIẾM & BỘ LỌC -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title mb-3"><i class="fas fa-search mr-2"></i>Tìm kiếm sản phẩm</h5>
+
+            @using (Html.BeginForm("Index", "Products", FormMethod.Get, new { @class = "form-horizontal", id = "searchForm" }))
+            {
+                <input type="hidden" name="page" value="1" />
+
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Tên sản phẩm</label>
+                        @Html.TextBoxFor(m => m.SearchTerm, new
+                        {
+                            @class = "form-control",
+                            placeholder = "Nhập tên sản phẩm...",
+                            id = "searchTerm",
+                            name = "searchTerm"
+                        })
+                    </div>
+
+                    <div class="col-md-2 mb-3">
+                        <label class="form-label">Giá từ</label>
+                        <div class="input-group">
+                            @Html.TextBoxFor(m => m.MinPrice, new
+                            {
+                                @class = "form-control",
+                                type = "number",
+                                min = "0",
+                                placeholder = "0",
+                                id = "minPrice",
+                                name = "minPrice"
+                            })
+                            <span class="input-group-text">₫</span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2 mb-3">
+                        <label class="form-label">Đến</label>
+                        <div class="input-group">
+                            @Html.TextBoxFor(m => m.MaxPrice, new
+                            {
+                                @class = "form-control",
+                                type = "number",
+                                min = "0",
+                                placeholder = "10,000,000",
+                                id = "maxPrice",
+                                name = "maxPrice"
+                            })
+                            <span class="input-group-text">₫</span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3 d-flex align-items-end">
+                        <div class="btn-group w-100">
+                            <button type="submit" class="btn btn-primary" id="searchBtn">
+                                <i class="fas fa-search mr-2"></i>Tìm kiếm
+                            </button>
+                            <a href="@Url.Action("Index")" class="btn btn-outline-secondary" id="resetBtn">
+                                <i class="fas fa-redo mr-2"></i>Làm mới
+                            </a>
+                            <a href="@Url.Action("Create")" class="btn btn-success" id="addBtn">
+                                <i class="fas fa-plus mr-2"></i>Thêm mới
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- THÔNG BÁO KẾT QUẢ TÌM KIẾM -->
+    @if (!string.IsNullOrEmpty(Model.SearchTerm) || Model.MinPrice.HasValue || Model.MaxPrice.HasValue)
+    {
+        <div class="alert alert-info mb-4" id="searchResults">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <i class="fas fa-info-circle mr-2"></i>
+                    Tìm thấy <strong>@Model.TotalCount</strong> sản phẩm
+                    @if (!string.IsNullOrEmpty(Model.SearchTerm))
+                    {
+                        <span>với từ khóa "<strong>@Model.SearchTerm</strong>"</span>
+                    }
+                    @if (Model.MinPrice.HasValue || Model.MaxPrice.HasValue)
+                    {
+                        <span>
+                            trong khoảng giá
+                            @if (Model.MinPrice.HasValue && Model.MaxPrice.HasValue)
+                            {
+                                <strong>@Model.MinPrice.Value.ToString("N0") - @Model.MaxPrice.Value.ToString("N0") ₫</strong>
+                            }
+                            else if (Model.MinPrice.HasValue)
+                            {
+                                <strong>từ @Model.MinPrice.Value.ToString("N0") ₫</strong>
+                            }
+                            else if (Model.MaxPrice.HasValue)
+                            {
+                                <strong>đến @Model.MaxPrice.Value.ToString("N0") ₫</strong>
+                            }
+                        </span>
+                    }
+                </div>
+                <a href="@Url.Action("Index")" class="btn btn-sm btn-outline-info" id="clearFilterBtn">Xóa bộ lọc</a>
+            </div>
+        </div>
+    }
+
+    <!-- DANH SÁCH SẢN PHẨM -->
+    <div class="card">
+        <div class="card-header bg-white d-flex justify-content-between align-items-center">
+            <h5 class="mb-0"><i class="fas fa-list mr-2"></i>Danh sách sản phẩm</h5>
+            <div>
+                <span class="badge bg-primary" id="productCount">
+                    <i class="fas fa-database mr-1"></i>
+                    @{
+                        var startItem = (currentPage - 1) * itemsPerPage + 1;
+                        var endItem = Math.Min(currentPage * itemsPerPage, Model.TotalCount);
+                    }
+                    @startItem-@endItem/@Model.TotalCount sản phẩm
+                </span>
+                <button type="button" class="btn btn-sm btn-outline-info ml-2" id="exportExcelBtn">
+                    <i class="fas fa-download mr-1"></i>Xuất Excel
+                </button>
+            </div>
+        </div>
+
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0" id="productsTable">
+                    <thead class="table-light">
+                        <tr>
+                            <th style="width: 40%">
+                                <a href="@Url.Action("Index", new {
+                                    sortBy = "name",
+                                    sortOrder = (Model.SortBy == "name" && Model.SortOrder == "asc") ? "desc" : "asc",
+                                    searchTerm = Model.SearchTerm,
+                                    minPrice = Model.MinPrice,
+                                    maxPrice = Model.MaxPrice,
+                                    page = currentPage
+                                })" class="sort-link">
+                                    Tên sản phẩm
+                                    @if (Model.SortBy == "name")
+                                    {
+                                        <i class="fas fa-sort-@(Model.SortOrder == "asc" ? "up" : "down")"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="fas fa-sort"></i>
+                                    }
+                                </a>
+                            </th>
+                            <th style="width: 15%" class="text-center">
+                                <a href="@Url.Action("Index", new {
+                                    sortBy = "price",
+                                    sortOrder = (Model.SortBy == "price" && Model.SortOrder == "asc") ? "desc" : "asc",
+                                    searchTerm = Model.SearchTerm,
+                                    minPrice = Model.MinPrice,
+                                    maxPrice = Model.MaxPrice,
+                                    page = currentPage
+                                })" class="sort-link">
+                                    Đơn giá
+                                    @if (Model.SortBy == "price")
+                                    {
+                                        <i class="fas fa-sort-@(Model.SortOrder == "asc" ? "up" : "down")"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="fas fa-sort"></i>
+                                    }
+                                </a>
+                            </th>
+                            <th style="width: 20%" class="text-center">Danh mục</th>
+                            <th style="width: 25%" class="text-center">Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Products != null && Model.Products.Any())
+                        {
+                            foreach (var product in Model.Products)
+                            {
+                                <tr class="product-row" data-product-id="@product.Id">
+                                    <td>
+                                        <div class="product-horizontal-layout">
+                                            @if (!string.IsNullOrEmpty(product.MainImage))
+                                            {
+                                                <img src="@Url.Content(product.MainImage)" alt="@product.Name"
+                                                     class="product-image-table">
+                                            }
+                                            else
+                                            {
+                                                <div class="no-image-table">
+                                                    <i class="fas fa-image"></i>
+                                                </div>
+                                            }
+                                            <div class="product-info-table">
+                                                <div class="product-name-table">@product.Name</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <span class="product-price fw-bold text-success">@product.Price.ToString("N0") ₫</span>
+                                    </td>
+                                    <td class="text-center">
+                                        @if (product.Categories != null)
+                                        {
+                                            <span class="badge bg-primary">@product.Categories.Name</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">Chưa phân loại</span>
+                                        }
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="btn-group btn-group-sm action-buttons">
+                                            <a href="@Url.Action("Edit", new { id = product.Id })"
+                                               class="btn btn-outline-warning" title="Sửa" data-action="edit">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <a href="@Url.Action("Delete", new { id = product.Id })"
+                                               class="btn btn-outline-danger" title="Xóa" data-action="delete"
+                                               onclick="return confirm('Bạn có chắc muốn xóa sản phẩm @product.Name?')">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="4" class="text-center py-5">
+                                    <div class="text-muted no-products-message">
+                                        <i class="fas fa-box-open fa-3x mb-3"></i>
+                                        <h5>Không có sản phẩm nào</h5>
+                                        @if (!string.IsNullOrEmpty(Model.SearchTerm) || Model.MinPrice.HasValue || Model.MaxPrice.HasValue)
+                                        {
+                                            <p class="mb-3">Không tìm thấy sản phẩm phù hợp với tiêu chí tìm kiếm</p>
+                                            <a href="@Url.Action("Index")" class="btn btn-primary">
+                                                <i class="fas fa-redo mr-2"></i>Hiển thị tất cả sản phẩm
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <p class="mb-3">Hãy thêm sản phẩm đầu tiên của bạn</p>
+                                            <a href="@Url.Action("Create")" class="btn btn-primary">
+                                                <i class="fas fa-plus mr-2"></i>Thêm sản phẩm mới
+                                            </a>
+                                        }
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- PHÂN TRANG -->
+    @if (totalPages > 1)
+    {
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <div class="custom-pagination">
+                    <div class="pagination-controls">
+                        @if (currentPage > 1)
+                        {
+                            <a href="@Url.Action("Index", new {
+                                page = currentPage - 1,
+                                searchTerm = Model.SearchTerm,
+                                minPrice = Model.MinPrice,
+                                maxPrice = Model.MaxPrice,
+                                sortBy = Model.SortBy,
+                                sortOrder = Model.SortOrder
+                            })" class="pagination-btn pagination-prev">
+                                <i class="fas fa-chevron-left"></i> Trang trước
+                            </a>
+                        }
+                        else
+                        {
+                            <span class="pagination-btn pagination-prev disabled">
+                                <i class="fas fa-chevron-left"></i> Trang trước
+                            </span>
+                        }
+
+                        <div class="pagination-pages">
+                            @for (int i = 1; i <= totalPages; i++)
+                            {
+                                <a href="@Url.Action("Index", new {
+                                    page = i,
+                                    searchTerm = Model.SearchTerm,
+                                    minPrice = Model.MinPrice,
+                                    maxPrice = Model.MaxPrice,
+                                    sortBy = Model.SortBy,
+                                    sortOrder = Model.SortOrder
+                                })" class="pagination-page @(i == currentPage ? "active" : "")">@i</a>
+                            }
+                        </div>
+
+                        @if (currentPage < totalPages)
+                        {
+                            <a href="@Url.Action("Index", new {
+                                page = currentPage + 1,
+                                searchTerm = Model.SearchTerm,
+                                minPrice = Model.MinPrice,
+                                maxPrice = Model.MaxPrice,
+                                sortBy = Model.SortBy,
+                                sortOrder = Model.SortOrder
+                            })" class="pagination-btn pagination-next">
+                                Trang sau <i class="fas fa-chevron-right"></i>
+                            </a>
+                        }
+                        else
+                        {
+                            <span class="pagination-btn pagination-next disabled">
+                                Trang sau <i class="fas fa-chevron-right"></i>
+                            </span>
+                        }
+                    </div>
+                    <div class="pagination-info-custom">
+                        Hiển thị trang @currentPage trong tổng số @totalPages trang
+                        (@startItem-@endItem của @Model.TotalCount sản phẩm)
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<!-- CHỈ GỌI JS FILE, KHÔNG CODE TRỰC TIẾP Ở ĐÂY -->
+<script src="~/Areas/Admin/Scripts/products.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>

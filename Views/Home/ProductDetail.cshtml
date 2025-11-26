@@ -1,0 +1,276 @@
+﻿@model FashionStore.Models.Product
+@{
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+    ViewBag.Title = Model.Name + " | Fashion Store";
+
+    // ÉP KIỂU từ ViewBag để tránh dynamic dispatch
+    var similar = ViewBag.SimilarProducts as IEnumerable<FashionStore.Models.Product>;
+    var deals = ViewBag.TopDeals as IEnumerable<FashionStore.Models.Product>;
+}
+<link rel="stylesheet" href="~/Areas/Admin/Content/Layout/product-detail.css" />
+<div class="container py-5">
+
+    <!-- 🧭 Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="@Url.Action("Index", "Home")">Trang chủ</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="#">
+                    @(Model.Category != null ? Model.Category.Name : "Danh mục khác")
+                </a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+                @Model.Name
+            </li>
+        </ol>
+    </nav>
+
+    <!-- VOUCHER SECTION -->
+    <div class="voucher-section">
+        <span class="voucher-badge">VOUCHER</span>
+        <span class="voucher-text">XTRA</span>
+        <span class="voucher-badge">SHOPEE</span>
+        <span class="voucher-text">SIEURE</span>
+    </div>
+
+    <div class="row g-5 align-items-start">
+        <!-- 📸 Ảnh sản phẩm -->
+        <div class="col-md-6">
+            <div class="border rounded shadow-sm p-2 text-center bg-white">
+                <img src="@Url.Content(Model.MainImage)"
+                     id="mainImage"
+                     class="img-fluid rounded"
+                     alt="@Model.Name"
+                     style="max-height: 520px; object-fit: contain;" />
+            </div>
+
+            @if (Model.ProductImages != null && Model.ProductImages.Any())
+            {
+                <div class="d-flex flex-wrap gap-2 mt-3 justify-content-center">
+                    @foreach (var img in Model.ProductImages)
+                    {
+                        <img src="@Url.Content(img.ImageUrl)"
+                             class="rounded border sub-thumb"
+                             alt="@Model.Name"
+                             onclick="document.getElementById('mainImage').src='@Url.Content(img.ImageUrl)';"
+                             style="width: 90px; height: 100px; object-fit: cover; cursor: pointer;" />
+                    }
+                </div>
+            }
+        </div>
+
+        <!-- 🧾 Thông tin sản phẩm -->
+        <div class="col-md-6">
+            <!-- Tiêu đề -->
+            <h1 class="product-title">@Model.Name</h1>
+
+            <!-- Đánh giá -->
+            <div class="rating-section">
+                <div class="rating-stars">
+                    ⭐⭐⭐⭐⭐ 4.3
+                </div>
+                <span class="rating-text">Có đánh giá riêng ban mới</span>
+            </div>
+
+            <!-- Giá -->
+            <div class="price-section">
+                <div>
+                    <span class="original-price">@String.Format("{0:N0} ₫", Model.Price * 1)</span>
+                    <span class="current-price">@String.Format("{0:N0} ₫", Model.Price)</span>
+                    <span class="discount-badge">38%</span>
+                </div>
+            </div>
+
+            <!-- Vận chuyển -->
+            <div class="shipping-section">
+                <div class="shipping-title">Vận Chuyển</div>
+                <div class="shipping-detail">
+                    (Hàng đặt trước) Nhận hàng dự kiến 3 Th12 - 5 Th12, phí giao 0đ >
+                    <span class="voucher-badge">Tặng Voucher 15.000đ</span>
+                </div>
+            </div>
+
+            <!-- Bảo hiểm Shopee -->
+            <div class="guarantee-section">
+                <div class="guarantee-item">
+                    <i class="fas fa-shield-alt guarantee-icon"></i>
+                    <span>An Tâm Mua Sắm Cùng Shopee</span>
+                </div>
+                <div class="guarantee-item">
+                    <i class="fas fa-tshirt guarantee-icon"></i>
+                    <span>Bảo hiểm Thời trang</span>
+                </div>
+            </div>
+
+            <!-- Màu sắc -->
+            <div class="color-section">
+                <div class="section-title">Màu</div>
+                <div class="color-options">
+                    @if (!string.IsNullOrEmpty(Model.Color))
+                    {
+                        var colors = Model.Color.Split(',');
+                        foreach (var color in colors)
+                        {
+                            <div class="color-option @(color == colors.First() ? "selected" : "")">@color.Trim()</div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="color-option selected">ĐEN</div>
+                        <div class="color-option">TRẮNG</div>
+                        <div class="color-option">XANH</div>
+                    }
+                </div>
+            </div>
+
+            <!-- Size -->
+            <div class="size-section">
+                <div class="section-title">SIZE</div>
+                <div class="size-options">
+                    @if (!string.IsNullOrEmpty(Model.Size))
+                    {
+                        var sizes = Model.Size.Split(',');
+                        foreach (var size in sizes)
+                        {
+                            <div class="size-option @(size == sizes.First() ? "selected" : "")">@size.Trim()</div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="size-option selected">M</div>
+                        <div class="size-option">L</div>
+                        <div class="size-option">XL</div>
+                    }
+                </div>
+                <div class="size-guide">Hướng dẫn chọn size ></div>
+            </div>
+
+            <!-- Số lượng -->
+            <div class="quantity-section">
+                <div class="quantity-label">Số Lượng</div>
+                <div class="quantity-controls">
+                    <button class="quantity-btn">-</button>
+                    <input type="text" class="quantity-input" value="1">
+                    <button class="quantity-btn">+</button>
+                </div>
+            </div>
+
+            <!-- Thông tin bán hàng -->
+            <div class="sales-info">
+                <strong>Đã bán:</strong> @(Model.SoldCount ?? 0)
+            </div>
+
+            <!-- Mô tả -->
+            @if (!string.IsNullOrWhiteSpace(Model.Description))
+            {
+                <div class="description-section">
+                    <p class="text-secondary lh-base">@Model.Description</p>
+                </div>
+            }
+
+            <!-- Nút thêm vào giỏ hàng -->
+            <div class="mt-4">
+                @using (Html.BeginForm("AddItem", "Cart", FormMethod.Post))
+                {
+                    @Html.Hidden("productId", Model.Id)
+
+                    <div class="row align-items-center">
+                        <div class="col-auto">
+                            <label class="form-label fw-bold">Số lượng:</label>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group" style="width: 150px;">
+                                <input type="number" name="quantity" value="1" min="1" max="10" class="form-control text-center">
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-cart-plus me-2"></i>Thêm vào giỏ hàng
+                            </button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <hr class="my-5" />
+
+    <!-- 🎯 Sản phẩm tương tự -->
+    <section>
+        <h4 class="fw-bold mb-4">
+            <i class="fa fa-shirt text-warning me-2"></i> Sản phẩm tương tự
+        </h4>
+        @if (similar != null && similar.Any())
+        {
+            @Html.Partial("_SimilarProducts", similar)
+        }
+        else
+        {
+            <div class="text-muted">Chưa có sản phẩm tương tự.</div>
+        }
+    </section>
+
+    <hr class="my-5" />
+
+    <!-- 🔥 Top Deals -->
+    <section>
+        <h4 class="fw-bold mb-4">
+            <i class="fa fa-fire text-danger me-2"></i> Top Deals
+        </h4>
+        @if (deals != null && deals.Any())
+        {
+            @Html.Partial("_TopDeals", deals)
+        }
+        else
+        {
+            <div class="text-muted">Chưa có sản phẩm bán chạy.</div>
+        }
+    </section>
+</div>
+
+@section Scripts {
+    <script>
+        // 🖼 Hiệu ứng hover cho ảnh phụ
+        const mainImg = document.getElementById("mainImage");
+        document.querySelectorAll(".sub-thumb").forEach(img => {
+            img.addEventListener("mouseenter", () => {
+                mainImg.src = img.src;
+            });
+        });
+
+        // Chọn màu sắc
+        document.querySelectorAll('.color-option').forEach(option => {
+            option.addEventListener('click', function () {
+                document.querySelectorAll('.color-option').forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+
+        // Chọn size
+        document.querySelectorAll('.size-option').forEach(option => {
+            option.addEventListener('click', function () {
+                document.querySelectorAll('.size-option').forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+
+        // Điều khiển số lượng
+        document.querySelectorAll('.quantity-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const input = this.parentElement.querySelector('.quantity-input');
+                let value = parseInt(input.value);
+
+                if (this.textContent === '+') {
+                    value++;
+                } else if (this.textContent === '-' && value > 1) {
+                    value--;
+                }
+
+                input.value = value;
+            });
+        });
+    </script>
+}
