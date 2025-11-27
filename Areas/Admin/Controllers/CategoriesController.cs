@@ -10,7 +10,7 @@ namespace FashionStore.Areas.Admin.Controllers
     {
         private FashionStoreWebEntities db = new FashionStoreWebEntities();
 
-        // GET: Admin/Categories
+        // GET: Admin/Categories 
         public ActionResult Index(string q = "")
         {
             ViewBag.PageTitle = "Quản lý danh mục";

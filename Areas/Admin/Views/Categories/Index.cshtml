@@ -1,4 +1,4 @@
-﻿@model IEnumerable<FashionStore.Models.Categories>
+﻿@model IEnumerable<FashionStore.Models.Category>
 @{
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
     ViewBag.PageTitle = "Quản lý danh mục";
@@ -17,7 +17,7 @@
             {
                 <input type="text" name="q" value="@Request["q"]" class="form-control" placeholder="Tìm theo tên/slug" />
             }
-            <a class="btn btn-primary btn-sm" href="@Url.Action("Create")">
+            <a class="btn btn-success btn-sm" href="@Url.Action("Create")">
                 <i class="fa fa-plus"></i> Thêm mới
             </a>
         </div>
@@ -43,10 +43,10 @@
                 <tr>
                     <td>@c.Name</td>
                     <td>@c.Slug</td>
-                    <td>@(c.ParentId.HasValue ? (c.Categories2 != null ? c.Categories2.Name : "") : "(Không)")</td>
+                    <td>@(c.ParentId.HasValue ? (c.Category1 != null ? c.Category1.Name : "") : "(Không)")</td>
                     <td>
-                        <a class="btn btn-warning btn-sm" href="@Url.Action("Edit", new { id = c.Id })"><i class="fa fa-edit"></i></a>
-                        <a class="btn btn-danger btn-sm" onclick="return confirm('Xóa danh mục này?')"
+                        <a class="btn btn-danger btn-sm" href="@Url.Action("Edit", new { id = c.Id })"><i class="fa fa-edit"></i></a>
+                        <a class="btn btn-success btn-sm" onclick="return confirm('Xóa danh mục này?')"
                            href="@Url.Action("Delete", new { id = c.Id })"><i class="fa fa-trash"></i></a>
                     </td>
                 </tr>

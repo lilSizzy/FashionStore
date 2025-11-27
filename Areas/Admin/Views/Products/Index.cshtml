@@ -238,9 +238,9 @@
                                         <span class="product-price fw-bold text-success">@product.Price.ToString("N0") ₫</span>
                                     </td>
                                     <td class="text-center">
-                                        @if (product.Categories != null)
+                                        @if (product.Category != null)
                                         {
-                                            <span class="badge bg-primary">@product.Categories.Name</span>
+                                            <span class="badge bg-primary">@product.Category.Name</span>
                                         }
                                         else
                                         {
