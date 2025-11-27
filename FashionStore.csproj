@@ -704,6 +704,8 @@
     <Content Include="Views\Order\OrderSuccess.cshtml" />
     <Content Include="Views\Order\MyOrder.cshtml" />
     <Content Include="Views\Order\OrderDetail.cshtml" />
+    <Content Include="Views\Shared\_FeaturedProducts.cshtml" />
+    <Content Include="Views\Shared\_NewProducts.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

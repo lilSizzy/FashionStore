@@ -1,0 +1,71 @@
+﻿
+@using FashionStore.Models
+@model IEnumerable<Product>
+
+<div class="row g-4">
+    @foreach (var item in Model)
+    {
+        <div class="col-6 col-md-4 col-lg-3 col-xl-2-4">
+            <div class="product-card h-100 shadow-sm rounded overflow-hidden border position-relative">
+                <a asp-controller="Products" asp-action="Detail" asp-route-id="@item.Id" class="text-decoration-none">
+                    <div class="position-relative overflow-hidden">
+                        @if (item.ProductImages != null && item.ProductImages.Any())
+                        {
+                            <img src="@item.ProductImages.First().ImageUrl"
+                                 class="w-100 product-img"
+                                 alt="@item.Name"
+                                 style="height: 220px; object-fit: cover; transition: transform .4s;" />
+                        }
+                        else
+                        {
+                            <img src="~/Content/images/no-image.jpg"
+                                 class="w-100 product-img"
+                                 alt="No image"
+                                 style="height: 220px; object-fit: cover;" />
+                        }
+
+                        <!-- Badge "Mới" -->
+                        <span class="badge bg-success position-absolute top-0 start-0 m-2">
+                            New
+                        </span>
+
+                    </div>
+
+                    <div class="p-3 text-center">
+                        <h6 class="product-name text-dark mb-2" title="@item.Name">
+                            @((item.Name.Length > 40) ? item.Name.Substring(0, 40) + "..." : item.Name)
+                        </h6>
+
+                        
+
+                        <small class="text-success d-block mt-1">
+                            Vừa cập nhật
+                        </small>
+                    </div>
+                </a>
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+    .product-card:hover .product-img {
+        transform: scale(1.08);
+    }
+
+    .product-card {
+        transition: all 0.3s ease;
+    }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+        }
+
+    @@media (min-width: 1400px) {
+        .col-xl-2-4 {
+            flex: 0 0 20%;
+            max-width: 20%;
+        }
+    }
+</style>

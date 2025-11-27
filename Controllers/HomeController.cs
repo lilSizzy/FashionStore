@@ -1,5 +1,6 @@
 ﻿using FashionStore.Models;
 using FashionStore.Models.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace FashionStore.Controllers
     public class HomeController : Controller
     {
         private FashionStoreWebEntities db = new FashionStoreWebEntities();
-        public ActionResult Index(string keyword)
+        public ActionResult Index(string keyword, int? pageFeatured, int? pageNew)
         {
             ViewBag.Title = "Trang chủ - Fashion Store";
 
@@ -39,18 +40,44 @@ namespace FashionStore.Controllers
                 );
                 ViewBag.SearchKeyword = keyword;
             }
+            int pageSize = 5; // Chỉ hiển thị 5 sản phẩm mỗi trang
 
-            // 🌟 Sản phẩm nổi bật: top 10 có SoldCount cao nhất
+            // 🌟 Sản phẩm nổi bật - phân trang
+            int pageNumberFeatured = (pageFeatured ?? 1);
             var featuredProducts = products
                 .OrderByDescending(p => p.SoldCount)
-                .Take(10)
+                .Skip((pageNumberFeatured - 1) * pageSize)
+                .Take(pageSize)
                 .ToList();
 
-            // 🆕 Sản phẩm mới: 10 sản phẩm mới nhất
+            // Tổng số sản phẩm nổi bật để tính số trang
+            int totalFeatured = products.Count();
+            ViewBag.FeaturedPageNumber = pageNumberFeatured;
+            ViewBag.FeaturedTotalPages = (int)Math.Ceiling(totalFeatured / (double)pageSize);
+
+            // 🆕 Sản phẩm mới - phân trang
+            int pageNumberNew = (pageNew ?? 1);
             var newProducts = products
                 .OrderByDescending(p => p.CreatedDate)
-                .Take(10)
+                .Skip((pageNumberNew - 1) * pageSize)
+                .Take(pageSize)
                 .ToList();
+
+            int totalNew = products.Count();
+            ViewBag.NewPageNumber = pageNumberNew;
+            ViewBag.NewTotalPages = (int)Math.Ceiling(totalNew / (double)pageSize);
+
+            //// 🌟 Sản phẩm nổi bật: top 10 có SoldCount cao nhất
+            //var featuredProducts = products
+            //    .OrderByDescending(p => p.SoldCount)
+            //    .Take(10)
+            //    .ToList();
+
+            //// 🆕 Sản phẩm mới: 10 sản phẩm mới nhất
+            //var newProducts = products
+            //    .OrderByDescending(p => p.CreatedDate)
+            //    .Take(10)
+            //    .ToList();
 
             // Gửi dữ liệu qua ViewModel
             var vm = new HomeViewModel

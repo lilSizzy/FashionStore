@@ -26,7 +26,7 @@
                             <small>Tổng sản phẩm</small>
                         </div>
                     </div>
-                    <a href="javascript:history.back()" class="btn btn-outline-secondary" id="backBtn">
+                    <a href="javascript:history.back()" class="btn btn-success " id="backBtn">
                         <i class="fas fa-arrow-left mr-2"></i>Quay lại
                     </a>
                 </div>
@@ -90,7 +90,7 @@
 
                     <div class="col-md-4 mb-3 d-flex align-items-end">
                         <div class="btn-group w-100">
-                            <button type="submit" class="btn btn-primary" id="searchBtn">
+                            <button type="submit" class="btn btn-success" id="searchBtn">
                                 <i class="fas fa-search mr-2"></i>Tìm kiếm
                             </button>
                             <a href="@Url.Action("Index")" class="btn btn-outline-secondary" id="resetBtn">
@@ -254,7 +254,7 @@
                                                 <i class="fas fa-edit"></i>
                                             </a>
                                             <a href="@Url.Action("Delete", new { id = product.Id })"
-                                               class="btn btn-outline-danger" title="Xóa" data-action="delete"
+                                               class="btn btn-success" title="Xóa" data-action="delete"
                                                onclick="return confirm('Bạn có chắc muốn xóa sản phẩm @product.Name?')">
                                                 <i class="fas fa-trash"></i>
                                             </a>
