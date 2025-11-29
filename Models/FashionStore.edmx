@@ -54,6 +54,8 @@
           <Property Name="Status" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="OrderDate" Type="datetime" />
+          <Property Name="CancelledDate" Type="datetime" />
+          <Property Name="CancelReason" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="ProductImages">
           <Key>
@@ -238,6 +240,8 @@
           <NavigationProperty Name="OrderDetails" Relationship="Self.FK_OrderDetails_Orders" FromRole="Orders" ToRole="OrderDetails" />
           <NavigationProperty Name="User" Relationship="Self.FK_Orders_Users" FromRole="Orders" ToRole="Users" />
           <Property Name="OrderDate" Type="DateTime" Precision="3" />
+          <Property Name="CancelledDate" Type="DateTime" Precision="3" />
+          <Property Name="CancelReason" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ProductImage">
           <Key>
@@ -410,6 +414,8 @@
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="FashionStoreWebModel.Order">
               <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="CancelReason" ColumnName="CancelReason" />
+                <ScalarProperty Name="CancelledDate" ColumnName="CancelledDate" />
                 <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="OrderCode" ColumnName="OrderCode" />

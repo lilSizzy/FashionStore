@@ -34,6 +34,8 @@ namespace FashionStore.Models
         public string Status { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime OrderDate { get; set; }
+        public DateTime? CancelledDate { get; set; }
+        public string CancelReason { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }

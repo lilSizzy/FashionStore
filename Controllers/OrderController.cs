@@ -221,6 +221,44 @@ namespace FashionStore.Controllers
                 return View(order);
             }
         }
+        // POST: Order/CancelOrder/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CancelOrder(int id, string cancelReason = null)
+        {
+            var currentUser = db.Users.FirstOrDefault(u => u.Username == User.Identity.Name);
+            if (currentUser == null)
+            {
+                TempData["ErrorMessage"] = "Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại!";
+                return RedirectToAction("Login", "Account");
+            }
+
+            var order = db.Orders
+                          .Include("OrderDetails")
+                          .FirstOrDefault(o => o.Id == id && o.UserId == currentUser.Id);
+
+            if (order == null)
+            {
+                TempData["ErrorMessage"] = "Không tìm thấy đơn hàng hoặc bạn không có quyền hủy!";
+                return RedirectToAction("MyOrder");
+            }
+
+            if (order.Status != "Pending")
+            {
+                TempData["ErrorMessage"] = "Chỉ có thể hủy đơn hàng khi đang ở trạng thái Chờ xử lý (Pending).";
+                return RedirectToAction("OrderDetail", new { id = id });
+            }
+
+            // Thực hiện hủy đơn
+            order.Status = "Cancelled";
+            order.CancelledDate = DateTime.Now;     
+            order.CancelReason = string.IsNullOrWhiteSpace(cancelReason) ? "Khách hàng hủy đơn" : cancelReason.Trim();
+
+            db.SaveChanges();
+
+            TempData["SuccessMessage"] = $"Đơn hàng #{order.Id} đã được hủy thành công!";
+            return RedirectToAction("MyOrder");
+        }
 
         protected override void Dispose(bool disposing)
         {

@@ -47,7 +47,7 @@ namespace FashionStore.Controllers
                 Username = username,
                 PasswordHash = password, // 🔥 Không mã hóa để tiện test
                 Role = "Customer",
-                CreatedDate = DateTime.Now
+                CreatedDate = DateTime.Now //Ngày tạo
             };
 
             db.Users.Add(newUser);
